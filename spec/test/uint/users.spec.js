@@ -5,7 +5,7 @@ const UserController = require('../../../src/controllers/users');
 const UserMiddleware = require('../../../src/middlewares/users');
 const { checkAdminRoute } = require('../../../src/helpers/errorHandler');
 
-describe('User Router POST /api/v1/auth/signup', () => {
+describe('User Signup Route POST /api/v1/auth/signup', () => {
   describe('User can register - ', () => {
     const request = httpMocks.createRequest({
       method: 'POST',
@@ -24,7 +24,7 @@ describe('User Router POST /api/v1/auth/signup', () => {
       const data = response._getJSONData();
       expect(response.statusCode).toBe(201);
       expect(Object.keys(data)).toEqual(['data', 'message', 'status']);
-      expect(data.message).toBe('Users was added successfully');
+      expect(data.message).toBe('User was added successfully');
       expect(data.status).toBe('USER_ADDED');
       expect(Object.keys(data.data[0]).length).toBe(5);
       expect(data.data[0].email).toEqual(request.body.email);
@@ -66,7 +66,7 @@ describe('User Router POST /api/v1/auth/signup', () => {
   });
 });
 
-describe('Admin User Router POST /api/v1/admin/auth/signup', () => {
+describe('Admin User Signup Route POST /api/v1/admin/auth/signup', () => {
   describe('Admin User can register - ', () => {
     const role = checkAdminRoute('/api/v1/admin/auth/signup') ? 'true' : 'false';
     const request = httpMocks.createRequest({
@@ -87,7 +87,7 @@ describe('Admin User Router POST /api/v1/admin/auth/signup', () => {
       const data = response._getJSONData();
       expect(response.statusCode).toBe(201);
       expect(Object.keys(data)).toEqual(['data', 'message', 'status']);
-      expect(data.message).toBe('Users was added successfully');
+      expect(data.message).toBe('User was added successfully');
       expect(data.status).toBe('USER_ADDED');
       expect(Object.keys(data.data[0]).length).toBe(5);
       expect(data.data[0].email).toEqual(request.body.email);

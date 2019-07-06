@@ -28,7 +28,7 @@ class UserController {
         .insert('email, first_name, last_name, password, is_admin', `'${email}', '${firstName}', '${lastName}', '${hashPassword}', '${role}'`);
       return res.status(201).json({
         data,
-        message: 'Users was added successfully',
+        message: 'User was added successfully',
         status: 'USER_ADDED',
       });
     } catch (e) {
@@ -43,7 +43,7 @@ class UserController {
         .delete('email', email);
       return res.status(202).json({
         data,
-        message: 'Users was deleted successfully',
+        message: 'User was deleted successfully',
         status: 'USER_DELETED',
       });
     } catch (e) {
