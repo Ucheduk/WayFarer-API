@@ -4,7 +4,7 @@
   "description": "A public bus transportation booking server back-end API",
   "main": "index.js",
   "scripts": {
-    "dev": "DEBUG=dev nodemon index.js",
+    "dev": "DEBUG=dev nodemon ./src/index.js",
     "test-init": "jasmine.js init",
     "test": "NODE_ENV=test jasmine",
     "lint": "eslint --init"
