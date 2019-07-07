@@ -1,6 +1,12 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Model = require('../models/users');
-const { internalServerErrorResponse, badRequestResponse, checkAdminRoute } = require('../helpers/errorHandler');
+const {
+  internalServerErrorResponse,
+  // nullResponse,
+  badRequestResponse,
+  checkAdminRoute,
+} = require('../helpers/errorHandler');
 
 class UserController {
   static model() {
@@ -8,7 +14,7 @@ class UserController {
   }
 
   // Creates new user
-  static async addUser(req, res) {
+  static async signUpUser(req, res) {
     try {
       const role = checkAdminRoute(req.path) ? 'true' : 'false';
       const {
@@ -26,10 +32,35 @@ class UserController {
       // Creates new user and return user data
       const data = await UserController.model()
         .insert('email, first_name, last_name, password, is_admin', `'${email}', '${firstName}', '${lastName}', '${hashPassword}', '${role}'`);
+      const { id, is_admin: isAdmin } = data[0];
+      const jwtPrivateKey = process.env.NODE_ENV === 'test' ? process.env.TEST_JWT_PRIVATE_KEY || process.env.JWT_PRIVATE_KEY : process.env.JWT_PRIVATE_KEY;
+      const token = jwt.sign({ email }, jwtPrivateKey);
       return res.status(201).json({
-        data,
-        message: 'User was added successfully',
-        status: 'USER_ADDED',
+        data: {
+          user_id: id,
+          is_admin: isAdmin,
+          token,
+        },
+        status: 'success',
+      });
+    } catch (e) {
+      return internalServerErrorResponse(req, res, e.message);
+    }
+  }
+
+  static async signInUser(req, res) {
+    try {
+      const {
+        email,
+        password,
+      } = req.body;
+      const data = await UserController.model().select('email, paasword, is_admin', `WHERE email='${email}'`);
+      if (!data.length) return badRequestResponse(req, res, 'Invalid email');
+      const validPassword = await bcrypt.compare(password, data[0].password);
+      if (!validPassword) return badRequestResponse(req, res, 'Invalid password');
+      return res.status(200).json({
+        message: 'User loged in successfully',
+        status: 'success',
       });
     } catch (e) {
       return internalServerErrorResponse(req, res, e.message);
@@ -39,12 +70,11 @@ class UserController {
   static async deleteUser(req, res) {
     try {
       const { email } = req.body;
-      const data = await UserController.model()
+      await UserController.model()
         .delete('email', email);
       return res.status(202).json({
-        data,
         message: 'User was deleted successfully',
-        status: 'USER_DELETED',
+        status: 'success',
       });
     } catch (e) {
       return internalServerErrorResponse(req, res, e.message);

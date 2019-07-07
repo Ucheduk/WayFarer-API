@@ -1,20 +1,20 @@
 module.exports = {
-  internalServerErrorResponse: (req, res, message) => res.status(500)
+  internalServerErrorResponse: (req, res, error) => res.status(500)
     .json({
-      message: message || 'Internal server error occured',
-      status: 'INTERNAL_SERVER_ERROR',
+      error: error || 'Internal server error occured',
+      status: 'error',
     }),
 
-  nullResponse: (req, res, message) => res.status(404)
+  nullResponse: (req, res, error) => res.status(404)
     .json({
-      message: message || 'Not found',
-      status: '404_ERROR',
+      error: error || '404 Not found',
+      status: 'error',
     }),
 
-  badRequestResponse: (req, res, message) => res.status(400)
+  badRequestResponse: (req, res, error) => res.status(400)
     .json({
-      message: message || 'Bad request',
-      status: 'BAD_REQUEST',
+      error: error || 'Bad request',
+      status: 'error',
     }),
 
   checkAdminRoute: (path) => {
