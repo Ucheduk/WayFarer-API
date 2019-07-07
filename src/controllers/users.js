@@ -1,6 +1,10 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 const Model = require('../models/users');
+
+dotenv.config();
+
 const {
   internalServerErrorResponse,
   // nullResponse,
