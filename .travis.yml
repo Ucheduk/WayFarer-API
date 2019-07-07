@@ -14,3 +14,9 @@ before_script:
   - psql -c 'create database wayfarer_test_db;' -U postgres
   - psql -c "ALTER USER postgres PASSWORD 'password'";
   - sh ./setup-test-db.sh
+
+script:
+  - npm run test:coveralls
+
+notifications:
+  - email: flase

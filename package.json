@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "DEBUG=dev nodemon index.js",
     "test-init": "jasmine.js init",
-    "test": "NODE_ENV=test jasmine",
-    "lint": "eslint --init"
+    "test": "NODE_ENV=test jasmine --reporter=jasmine-console-reporter",
+    "test:coveralls": "istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "lint": "eslint '**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,10 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.18.0",
+    "istanbul": "^0.4.5",
     "jasmine": "^3.4.0",
+    "jasmine-console-reporter": "^3.1.0",
+    "jasmine-node": "^3.0.0",
     "node-mocks-http": "^1.7.6",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
