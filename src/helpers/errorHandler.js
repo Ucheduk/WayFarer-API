@@ -1,21 +1,34 @@
 module.exports = {
-  internalServerErrorResponse: (req, res, message) => res.status(500)
+  internalServerErrorResponse: (req, res, error) => res.status(500)
     .json({
-      message: message || 'Internal server error occured',
-      status: 'INTERNAL_SERVER_ERROR',
+      status: 'error',
+      error: error || 'Internal server error occured',
     }),
 
-  nullResponse: (req, res, message) => res.status(404)
+  nullResponse: (req, res, error) => res.status(404)
     .json({
-      message: message || 'Not found',
-      status: '404_ERROR',
+      status: 'error',
+      error: error || '404 Not found',
     }),
 
-  badRequestResponse: (req, res, message) => res.status(400)
+  badRequestResponse: (req, res, error) => res.status(400)
     .json({
-      message: message || 'Bad request',
-      status: 'BAD_REQUEST',
+      status: 'error',
+      error: error || 'Bad request',
     }),
+
+  unauthorizedRequestResponse: (req, res, error) => res.status(401)
+    .json({
+      status: 'error',
+      error: error || 'Unauthorized',
+    }),
+
+  forbiddenRequestResponse: (req, res, error) => res.status(403)
+    .json({
+      status: 'error',
+      error: error || 'Forbidden',
+    }),
+
 
   checkAdminRoute: (path) => {
     const pattern = /\/admin\/auth\/(signin|signup)/i;

@@ -1,8 +1,8 @@
 INSERT INTO
   users
 VALUES 
-  ( default, 'admin@test.com', 'Richard', 'Smith', 'bananas123', 'true'),
-  ( default, 'test@test.com', 'John', 'Applegate', 'avocados123', 'false');
+  ( default, 'admin@test.com', 'Richard', 'Smith', '$2b$10$35zPvY1lmXVQk9jL50I7Fu9zhE43Q164eExx.Ij/VykCoBhwkWxOu', 'true'),
+  ( default, 'john@test.com', 'John', 'Applegate', '$2b$10$mEaWpnnaoBrAA24cuWapTuh1eTgfJbIDtHlNqrcK8t8PBl.sTjHmW', 'false');
 
 INSERT INTO
   bus

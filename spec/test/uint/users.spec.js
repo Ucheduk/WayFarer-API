@@ -3,9 +3,9 @@
 const httpMocks = require('node-mocks-http');
 const UserController = require('../../../src/controllers/users');
 const UserMiddleware = require('../../../src/middlewares/users');
-const { checkAdminRoute } = require('../../../src/helpers/errorHandler');
 
-describe('User Signup Route POST /api/v1/auth/signup', () => {
+// SignUp
+describe('User Signup Route - POST /api/v1/auth/signup', () => {
   describe('User can register - ', () => {
     const request = httpMocks.createRequest({
       method: 'POST',
@@ -20,17 +20,16 @@ describe('User Signup Route POST /api/v1/auth/signup', () => {
     const response = httpMocks.createResponse();
     afterEach(() => UserController.deleteUser(request, response));
     it('should create a new user', async () => {
-      await UserController.addUser(request, response);
+      await UserController.signUpUser(request, response);
       const data = response._getJSONData();
       expect(response.statusCode).toBe(201);
-      expect(Object.keys(data)).toEqual(['data', 'message', 'status']);
-      expect(data.message).toBe('User was added successfully');
-      expect(data.status).toBe('USER_ADDED');
-      expect(Object.keys(data.data[0]).length).toBe(5);
-      expect(data.data[0].email).toEqual(request.body.email);
-      expect(data.data[0].first_name).toEqual(request.body.first_name);
-      expect(data.data[0].last_name).toEqual(request.body.last_name);
-      expect(data.data[0].is_admin).toEqual(false);
+      expect(Object.keys(data)).toEqual(['status', 'data']);
+      expect(data.status).toBe('success');
+      expect(Object.keys(data.data).length).toBe(3);
+      expect(Object.keys(data.data)).toEqual(['user_id', 'is_admin', 'token']);
+      expect(data.data.user_id).toMatch(/\d{1,}/);
+      expect(data.data.is_admin).toEqual(false);
+      expect(data.data.token).toMatch(/e/);
     });
   });
   describe('User can not register - ', () => {
@@ -46,29 +45,30 @@ describe('User Signup Route POST /api/v1/auth/signup', () => {
         },
       });
       const response = httpMocks.createResponse();
-      await UserController.addUser(request, response);
+      await UserController.signUpUser(request, response);
       const data = response._getJSONData();
       expect(response.statusCode).toBe(400);
-      expect(data.message).toBe('User already registered');
+      expect(data.error).toBe('User already registered');
+      expect(data.status).toBe('error');
     });
-    it('should return 400 status code if request body is empty', async () => {
+    it('should return "email" is required with 400 status code if request body is empty', async () => {
       const request = httpMocks.createRequest({
         method: 'POST',
         url: '/api/v1/users',
         body: {},
       });
       const response = httpMocks.createResponse();
-      await UserMiddleware.validateUser(request, response);
+      await UserMiddleware.validateSignUpUser(request, response);
       const data = response._getJSONData();
       expect(response.statusCode).toBe(400);
-      expect(data.message).toBe('"email" is required');
+      expect(data.error).toBe('"email" is required');
+      expect(data.status).toBe('error');
     });
   });
 });
 
-describe('Admin User Signup Route POST /api/v1/admin/auth/signup', () => {
+describe('Admin User Signup Route - POST /api/v1/admin/auth/signup', () => {
   describe('Admin User can register - ', () => {
-    const role = checkAdminRoute('/api/v1/admin/auth/signup') ? 'true' : 'false';
     const request = httpMocks.createRequest({
       method: 'POST',
       url: '/api/v1/admin/auth/signup',
@@ -77,23 +77,94 @@ describe('Admin User Signup Route POST /api/v1/admin/auth/signup', () => {
         first_name: 'New',
         last_name: 'User',
         password: '12345',
-        is_admin: role,
       },
     });
     const response = httpMocks.createResponse();
     afterEach(() => UserController.deleteUser(request, response));
     it('should create a new admin user', async () => {
-      await UserController.addUser(request, response);
+      await UserController.signUpUser(request, response);
       const data = response._getJSONData();
       expect(response.statusCode).toBe(201);
-      expect(Object.keys(data)).toEqual(['data', 'message', 'status']);
-      expect(data.message).toBe('User was added successfully');
-      expect(data.status).toBe('USER_ADDED');
-      expect(Object.keys(data.data[0]).length).toBe(5);
-      expect(data.data[0].email).toEqual(request.body.email);
-      expect(data.data[0].first_name).toEqual(request.body.first_name);
-      expect(data.data[0].last_name).toEqual(request.body.last_name);
-      expect(data.data[0].is_admin).toEqual(true);
+      expect(Object.keys(data)).toEqual(['status', 'data']);
+      expect(data.status).toBe('success');
+      expect(Object.keys(data.data).length).toBe(3);
+      expect(Object.keys(data.data)).toEqual(['user_id', 'is_admin', 'token']);
+      expect(data.data.user_id).toMatch(/\d{1,}/);
+      expect(data.data.is_admin).toEqual(true);
+      expect(data.data.token).toMatch(/e/);
+    });
+  });
+});
+
+// SignIn
+describe('User Signin Route - POST /api/v1/auth/signin', () => {
+  describe('User can login - ', () => {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    it('should login user', async () => {
+      await UserController.signInUser(request, response);
+      const data = response._getJSONData();
+      expect(response.statusCode).toBe(201);
+      expect(Object.keys(data)).toEqual(['status', 'data']);
+      expect(data.status).toBe('success');
+      expect(Object.keys(data.data).length).toBe(3);
+      expect(Object.keys(data.data)).toEqual(['user_id', 'is_admin', 'token']);
+      expect(data.data.user_id).toMatch(/\d{1,}/);
+      expect(data.data.is_admin).toBe(true);
+      expect(data.data.token).toMatch(/e/);
+    });
+  });
+  describe('User can not login - ', () => {
+    it('should return 400 status code if user is not registered', async () => {
+      const request = httpMocks.createRequest({
+        method: 'POST',
+        url: '/api/v1/auth/signin',
+        body: {
+          email: 'newuser@test.com',
+          password: '12345',
+        },
+      });
+      const response = httpMocks.createResponse();
+      await UserController.signInUser(request, response);
+      const data = response._getJSONData();
+      expect(response.statusCode).toBe(400);
+      expect(data.error).toBe('Invalid email');
+      expect(data.status).toBe('error');
+    });
+    it('should return "email" is required with 400 status code if request body is empty', async () => {
+      const request = httpMocks.createRequest({
+        method: 'POST',
+        url: '/api/v1/users',
+        body: {},
+      });
+      const response = httpMocks.createResponse();
+      await UserMiddleware.validateSignInUser(request, response);
+      const data = response._getJSONData();
+      expect(response.statusCode).toBe(400);
+      expect(data.error).toBe('"email" is required');
+      expect(data.status).toBe('error');
+    });
+    it('should return "password" is required with 400 status code if request body is empty', async () => {
+      const request = httpMocks.createRequest({
+        method: 'POST',
+        url: '/api/v1/users',
+        body: {
+          email: 'newuser@test.com',
+        },
+      });
+      const response = httpMocks.createResponse();
+      await UserMiddleware.validateSignInUser(request, response);
+      const data = response._getJSONData();
+      expect(response.statusCode).toBe(400);
+      expect(data.error).toBe('"password" is required');
+      expect(data.status).toBe('error');
     });
   });
 });

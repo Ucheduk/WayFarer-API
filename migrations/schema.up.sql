@@ -16,14 +16,16 @@ CREATE TABLE bus (
   capacity INTEGER NOT NULL
 );
 
+CREATE TYPE status_type AS ENUM ('active', 'cancelled');
+
 CREATE TABLE trip (
   id serial PRIMARY KEY,
   bus_id INTEGER,
   origin VARCHAR(60) NOT NULL,
   destination VARCHAR(60) NOT NULL,
-  trip_data DATE NOT NULL,
-  fare FLOAT NOT NULL DEFAULT active,
-  status FLOAT,
+  trip_date DATE NOT NULL,
+  fare FLOAT,
+  status status_type DEFAULT 'active',
   CONSTRAINT trip_bus_id_fkey FOREIGN KEY (bus_id)
     REFERENCES bus (id) MATCH SIMPLE
 );
