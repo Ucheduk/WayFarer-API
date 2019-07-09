@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
 const httpMocks = require('node-mocks-http');
@@ -20,31 +21,39 @@ describe('Create Trips Route - /api/v1/trip', () => {
     });
     const response = httpMocks.createResponse();
     beforeEach(async () => {
-      await UserController.signInUser(request, response);
-      data = response._getJSONData();
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+        return ex;
+      }
     });
     it('should return success response', async () => {
-      const req = httpMocks.createRequest({
-        method: 'POST',
-        url: '/api/v1/trip',
-        body: {
-          token: data.data.token,
-          user_id: data.data.user_id,
-          is_admin: data.data.isadmin,
-          bus_id: 1,
-          origin: 'Abuja',
-          destination: 'Lagos',
-          trip_date: '2019-09-12',
-          fare: 20000,
-        },
-      });
-      const res = httpMocks.createResponse();
-      await TripController.createTrip(req, res);
-      const result = res._getJSONData();
-      expect(res.statusCode).toBe(201);
-      expect(Object.keys(result)).toEqual(['status', 'data']);
-      expect(result.data.trip_id && result.data.bus_id).toMatch(/\d{1,}/);
-      expect(Object.keys(result.data).length).toBe(7);
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trip',
+          body: {
+            token: data.data.token,
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = httpMocks.createResponse();
+        await TripController.createTrip(req, res);
+        const result = res._getJSONData();
+        expect(res.statusCode).toBe(201);
+        expect(Object.keys(result)).toEqual(['status', 'data']);
+        expect(result.data.trip_id && result.data.bus_id).toMatch(/\d{1,}/);
+        expect(Object.keys(result.data).length).toBe(7);
+      } catch (ex) {
+        return ex;
+      }
     });
   });
 
@@ -60,29 +69,37 @@ describe('Create Trips Route - /api/v1/trip', () => {
     });
     const response = httpMocks.createResponse();
     beforeEach(async () => {
-      await UserController.signInUser(request, response);
-      data = response._getJSONData();
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+        return ex;
+      }
     });
     it('should return unauthorized error response', async () => {
-      const req = httpMocks.createRequest({
-        method: 'POST',
-        url: '/api/v1/trip',
-        body: {
-          user_id: data.data.user_id,
-          is_admin: data.data.isadmin,
-          bus_id: 1,
-          origin: 'Abuja',
-          destination: 'Lagos',
-          trip_date: '2019-09-12',
-          fare: 20000,
-        },
-      });
-      const res = httpMocks.createResponse();
-      await TripMiddleware.auth(req, res);
-      const result = res._getJSONData();
-      expect(res.statusCode).toBe(401);
-      expect(result.error).toBe('Access denied. No token provided.');
-      expect(result.status).toBe('error');
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trip',
+          body: {
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = httpMocks.createResponse();
+        await TripMiddleware.auth(req, res);
+        const result = res._getJSONData();
+        expect(res.statusCode).toBe(401);
+        expect(result.error).toBe('Access denied. No token provided.');
+        expect(result.status).toBe('error');
+      } catch (ex) {
+        return ex;
+      }
     });
   });
 
@@ -98,30 +115,38 @@ describe('Create Trips Route - /api/v1/trip', () => {
     });
     const response = httpMocks.createResponse();
     beforeEach(async () => {
-      await UserController.signInUser(request, response);
-      data = response._getJSONData();
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+        return ex;
+      }
     });
     it('should return bad request error response', async () => {
-      const req = httpMocks.createRequest({
-        method: 'POST',
-        url: '/api/v1/trip',
-        body: {
-          token: 'invalid.token',
-          user_id: data.data.user_id,
-          is_admin: data.data.isadmin,
-          bus_id: 1,
-          origin: 'Abuja',
-          destination: 'Lagos',
-          trip_date: '2019-09-12',
-          fare: 20000,
-        },
-      });
-      const res = httpMocks.createResponse();
-      await TripMiddleware.auth(req, res);
-      const result = res._getJSONData();
-      expect(res.statusCode).toBe(400);
-      expect(result.error).toBe('Invalid token.');
-      expect(result.status).toBe('error');
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trip',
+          body: {
+            token: 'invalid.token',
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = httpMocks.createResponse();
+        await TripMiddleware.auth(req, res);
+        const result = res._getJSONData();
+        expect(res.statusCode).toBe(400);
+        expect(result.error).toBe('Invalid token.');
+        expect(result.status).toBe('error');
+      } catch (ex) {
+        return ex;
+      }
     });
   });
 
@@ -137,30 +162,38 @@ describe('Create Trips Route - /api/v1/trip', () => {
     });
     const response = httpMocks.createResponse();
     beforeEach(async () => {
-      await UserController.signInUser(request, response);
-      data = response._getJSONData();
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+        return ex;
+      }
     });
     it('should return unauthorized error response', async () => {
-      const req = httpMocks.createRequest({
-        method: 'POST',
-        url: '/api/v1/trip',
-        body: {
-          token: data.data.token,
-          user_id: data.data.user_id,
-          is_admin: data.data.isadmin,
-          bus_id: 1,
-          origin: 'Abuja',
-          destination: 'Lagos',
-          trip_date: '2019-09-12',
-          fare: 20000,
-        },
-      });
-      const res = httpMocks.createResponse();
-      await TripMiddleware.admin(req, res);
-      const result = res._getJSONData();
-      expect(res.statusCode).toBe(403);
-      expect(result.error).toBe('Access denied. User must be an Admin.');
-      expect(result.status).toBe('error');
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trip',
+          body: {
+            token: data.data.token,
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = httpMocks.createResponse();
+        await TripMiddleware.admin(req, res);
+        const result = res._getJSONData();
+        expect(res.statusCode).toBe(403);
+        expect(result.error).toBe('Access denied. User must be an Admin.');
+        expect(result.status).toBe('error');
+      } catch (ex) {
+        return ex;
+      }
     });
   });
 });
