@@ -7,7 +7,6 @@ dotenv.config();
 
 const {
   internalServerErrorResponse,
-  // nullResponse,
   badRequestResponse,
   checkAdminRoute,
 } = require('../helpers/errorHandler');
