@@ -34,8 +34,8 @@ CREATE TABLE booking (
   id serial,
   trip_id INTEGER,
   user_id INTEGER,
-  origin VARCHAR(60),
   created_on TIMESTAMP NOT NULL,
+  seat_number INTEGER NOT NULL,
   PRIMARY KEY (trip_id, user_id),
   CONSTRAINT booking_trip_id_fkey FOREIGN KEY (trip_id)
     REFERENCES trip (id) MATCH SIMPLE

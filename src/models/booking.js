@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const connectionString = process.env.NODE_ENV === 'test' ? process.env.TEST_DATABASE_URL : process.env.DATABASE_URL;
+const connectionString = process.env.NODE_ENV === 'test' ? process.env.TEST_DATABASE_URL || process.env.DATABASE_URL : process.env.DATABASE_URL;
 
 class Model {
   constructor(table) {
@@ -22,7 +22,7 @@ class Model {
     return data.rows;
   }
 
-  async insert(columns, values, queryData = 'id, email, first_name, last_name, is_admin') {
+  async insert(columns, values, queryData = 'id, trip_id, user_id, created_on, seat_number') {
     const query = `INSERT INTO ${this.table}(${columns}) VALUES (${values}) RETURNING ${queryData}`;
     const data = await this.pool.query(query);
     return data.rows;
