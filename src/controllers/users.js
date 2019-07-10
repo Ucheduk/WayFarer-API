@@ -58,15 +58,19 @@ class UserController {
         email,
         password,
       } = req.body;
-      const data = await UserController.model().select('id, password', `WHERE email='${email}'`);
+      const data = await UserController.model().select('id, password, is_admin', `WHERE email='${email}'`);
       if (!data.length) return badRequestResponse(req, res, 'Invalid email');
-      const { id, password: hashPassword } = data[0];
+      const { id, password: hashPassword, is_admin: isAdmin } = data[0];
       const validPassword = await bcrypt.compare(password, hashPassword);
       if (!validPassword) return badRequestResponse(req, res, 'Invalid password');
+      const jwtPrivateKey = process.env.NODE_ENV === 'test' ? process.env.TEST_JWT_PRIVATE_KEY || process.env.JWT_PRIVATE_KEY : process.env.JWT_PRIVATE_KEY;
+      const token = jwt.sign({ email }, jwtPrivateKey);
       return res.status(201).json({
         status: 'success',
         data: {
           user_id: id,
+          is_admin: isAdmin,
+          token,
         },
       });
     } catch (e) {

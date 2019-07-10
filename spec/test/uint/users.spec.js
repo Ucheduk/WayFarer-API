@@ -110,7 +110,7 @@ describe('User Signin Route - POST /api/v1/auth/signin', () => {
       expect(response.statusCode).toBe(201);
       expect(Object.keys(data)).toEqual(['status', 'data']);
       expect(data.status).toBe('success');
-      expect(Object.keys(data.data).length).toBe(1);
+      expect(Object.keys(data.data).length).toBe(3);
       expect(data.data.user_id).toMatch(/\d{1,}/);
     });
   });
