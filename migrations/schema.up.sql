@@ -22,7 +22,7 @@ CREATE TABLE trip (
   origin VARCHAR(60) NOT NULL,
   destination VARCHAR(60) NOT NULL,
   trip_data DATE NOT NULL,
-  fare FLOAT NOT NULL DEFAULT active,
+  fare FLOAT,
   status FLOAT,
   CONSTRAINT trip_bus_id_fkey FOREIGN KEY (bus_id)
     REFERENCES bus (id) MATCH SIMPLE
