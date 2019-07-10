@@ -17,6 +17,19 @@ module.exports = {
       error: error || 'Bad request',
     }),
 
+  unauthorizedRequestResponse: (req, res, error) => res.status(401)
+    .json({
+      status: 'error',
+      error: error || 'Unauthorized',
+    }),
+
+  forbiddenRequestResponse: (req, res, error) => res.status(403)
+    .json({
+      status: 'error',
+      error: error || 'Forbidden',
+    }),
+
+
   checkAdminRoute: (path) => {
     const pattern = /\/admin\/auth\/(signin|signup)/i;
     if (pattern.test(path)) {
