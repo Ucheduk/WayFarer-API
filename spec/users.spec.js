@@ -2,12 +2,12 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
 const httpMocks = require('node-mocks-http');
-const UserController = require('../../../src/controllers/users');
-const UserMiddleware = require('../../../src/middlewares/users');
+const UserController = require('../src/controllers/users');
+const UserMiddleware = require('../src/middlewares/users');
 
 // SignUp
-describe('User Signup Route - POST /api/v1/auth/signup', () => {
-  describe('User can register - ', () => {
+describe('Can user signup Route - POST /api/v1/auth/signup', () => {
+  describe('If email, first_name, lastname and password is valid - ', () => {
     const request = httpMocks.createRequest({
       method: 'POST',
       url: '/api/v1/auth/signup',
@@ -36,8 +36,8 @@ describe('User Signup Route - POST /api/v1/auth/signup', () => {
       }
     });
   });
-  describe('User can not register - ', () => {
-    it('should return 400 status code if user already registered', async () => {
+  describe('If user is already registered - ', () => {
+    it('should return 400 status code', async () => {
       try {
         const request = httpMocks.createRequest({
           method: 'POST',
@@ -59,7 +59,9 @@ describe('User Signup Route - POST /api/v1/auth/signup', () => {
         return ex;
       }
     });
-    it('should return "email" is required with 400 status code if request body is empty', async () => {
+  });
+  describe('If request body is empty - ', () => {
+    it('should return "email" is required with 400 status code', async () => {
       try {
         const request = httpMocks.createRequest({
           method: 'POST',
@@ -79,8 +81,8 @@ describe('User Signup Route - POST /api/v1/auth/signup', () => {
   });
 });
 
-describe('Admin User Signup Route - POST /api/v1/admin/auth/signup', () => {
-  describe('Admin User can register - ', () => {
+describe('Can admin user signup Route - POST /api/v1/admin/auth/signup', () => {
+  describe('If email, first_name, lastname and password is valid - ', () => {
     const request = httpMocks.createRequest({
       method: 'POST',
       url: '/api/v1/admin/auth/signup',
@@ -112,8 +114,8 @@ describe('Admin User Signup Route - POST /api/v1/admin/auth/signup', () => {
 });
 
 // SignIn
-describe('User Signin Route - POST /api/v1/auth/signin', () => {
-  describe('User can login - ', () => {
+describe('Can user signin Route - POST /api/v1/auth/signin', () => {
+  describe('If email and password is valid - ', () => {
     const request = httpMocks.createRequest({
       method: 'POST',
       url: '/api/v1/auth/signin',
@@ -140,8 +142,8 @@ describe('User Signin Route - POST /api/v1/auth/signin', () => {
       }
     });
   });
-  describe('User can not login - ', () => {
-    it('should return 400 status code if user is not registered', async () => {
+  describe('If user is not registered - ', () => {
+    it('should return 400 status code', async () => {
       try {
         const request = httpMocks.createRequest({
           method: 'POST',
@@ -161,7 +163,9 @@ describe('User Signin Route - POST /api/v1/auth/signin', () => {
         return ex;
       }
     });
-    it('should return "email" is required with 400 status code if request body is empty', async () => {
+  });
+  describe('If request body is empty - ', () => {
+    it('should return "email" is required with 400 status code', async () => {
       try {
         const request = httpMocks.createRequest({
           method: 'POST',
@@ -178,7 +182,9 @@ describe('User Signin Route - POST /api/v1/auth/signin', () => {
         return ex;
       }
     });
-    it('should return "password" is required with 400 status code if request body is empty', async () => {
+  });
+  describe('If request body has only email - ', () => {
+    it('should return "password" is required with 400 status code', async () => {
       try {
         const request = httpMocks.createRequest({
           method: 'POST',
