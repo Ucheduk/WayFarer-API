@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-const Model = require('../models/users');
+const Model = require('../models/Model');
 
 dotenv.config();
 
@@ -34,7 +34,11 @@ class UserController {
       const hashPassword = await bcrypt.hash(password, salt);
       // Creates new user and return user data
       const data = await UserController.model()
-        .insert('email, first_name, last_name, password, is_admin', `'${email}', '${firstName}', '${lastName}', '${hashPassword}', '${role}'`);
+        .insert(
+          'email, first_name, last_name, password, is_admin',
+          `'${email}', '${firstName}', '${lastName}', '${hashPassword}', '${role}'`,
+          'id, email, first_name, last_name, is_admin',
+        );
       const { id, is_admin: isAdmin } = data[0];
       const jwtPrivateKey = process.env.NODE_ENV === 'test' ? process.env.TEST_JWT_PRIVATE_KEY || process.env.JWT_PRIVATE_KEY : process.env.JWT_PRIVATE_KEY;
       const token = jwt.sign({ email }, jwtPrivateKey);

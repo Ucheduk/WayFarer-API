@@ -1,4 +1,4 @@
-const Model = require('../models/trip');
+const Model = require('../models/Model');
 
 const {
   internalServerErrorResponse,
@@ -26,7 +26,11 @@ class TripController {
 
       // Creates new user and return user data
       const data = await TripController.model()
-        .insert('bus_id, origin, destination, trip_date, fare', `'${busId}', '${origin}', '${destination}', '${tripDate}', '${fare}'`);
+        .insert(
+          'bus_id, origin, destination, trip_date, fare',
+          `'${busId}', '${origin}', '${destination}', '${tripDate}', '${fare}'`,
+          'id, bus_id, origin, destination, trip_date, fare, status',
+        );
 
       const {
         id,
