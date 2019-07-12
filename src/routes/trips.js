@@ -1,7 +1,7 @@
-const TripController = require('../controllers/trips');
-const AuthMiddleware = require('../middlewares/auth');
+import TripController from '../controllers/trips';
+import AuthMiddleware from '../middlewares/auth';
 
-module.exports = (router) => {
+export default (router) => {
   router.post(
     '/trips',
     AuthMiddleware.auth,

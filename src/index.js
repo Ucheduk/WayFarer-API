@@ -1,8 +1,8 @@
-const express = require('express');
-const debug = require('debug');
-const usersRouter = require('./routes/users');
-const tripRouter = require('./routes/trips');
-const bookingRouter = require('./routes/bookings');
+import express from 'express';
+import debug from 'debug';
+import usersRouter from './routes/users';
+import tripRouter from './routes/trips';
+import bookingRouter from './routes/bookings';
 
 const app = express();
 app.use(express.json());
@@ -16,4 +16,4 @@ app.use('/api/v1', bookingRouter(router));
 const port = process.env.PORT || 8000;
 const server = app.listen(port, () => debug('dev')(`Listening on port ${port}...`));
 
-module.exports = server;
+export default server;

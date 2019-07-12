@@ -1,15 +1,14 @@
-const bcrypt = require('bcrypt');
-const Model = require('../models/Model');
-const generateJwtToken = require('../helpers/generateJwtToken');
-
-
-const {
+import bcrypt from 'bcrypt';
+import Model from '../models/Model';
+import generateJwtToken from '../helpers/generateJwtToken';
+import {
   internalServerErrorResponse,
   badRequestResponse,
   checkAdminRoute,
-} = require('../helpers/errorHandler');
+} from '../helpers/errorHandler';
 
-class UserController {
+
+export default class UserController {
   static model() {
     return new Model('users');
   }
@@ -91,5 +90,3 @@ class UserController {
     }
   }
 }
-
-module.exports = UserController;

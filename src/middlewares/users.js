@@ -1,7 +1,7 @@
-const Joi = require('joi');
-const { badRequestResponse } = require('../helpers/errorHandler');
+import Joi from 'joi';
+import { badRequestResponse } from '../helpers/errorHandler';
 
-class UserMiddleware {
+export default class UserMiddleware {
   static validateSignUpUser(req, res, next) {
     const schema = {
       email: Joi.string().min(5).max(255).required()
@@ -32,5 +32,3 @@ class UserMiddleware {
     return next();
   }
 }
-
-module.exports = UserMiddleware;

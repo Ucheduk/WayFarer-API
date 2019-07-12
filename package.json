@@ -4,9 +4,9 @@
   "description": "A public bus transportation booking server back-end API",
   "main": "index.js",
   "scripts": {
-    "dev": "DEBUG=dev nodemon ./src/index.js",
+    "dev": "DEBUG=dev nodemon --exec babel-node ./src/index.js",
     "test-init": "jasmine.js init",
-    "test": "NODE_ENV=test jasmine --reporter=jasmine-console-reporter",
+    "test": "NODE_ENV=test babel-node spec/run.js",
     "test:coveralls": "istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "lint": "eslint '**/*.js'"
   },
@@ -17,7 +17,8 @@
   "keywords": [
     "node",
     "rest",
-    "api"
+    "api",
+    "wayfarer"
   ],
   "author": "Uche Nwakwuo",
   "license": "ISC",
@@ -26,6 +27,9 @@
   },
   "homepage": "https://github.com/Ucheduk/WayFarer-API#readme",
   "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/node": "^7.5.0",
+    "@babel/preset-env": "^7.5.4",
     "coveralls": "^3.0.4",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",

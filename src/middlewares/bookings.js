@@ -1,13 +1,13 @@
-const TripController = require('../controllers/trips');
-const BusController = require('../controllers/buses');
-const BookingController = require('../controllers/bookings');
-const {
+import TripController from '../controllers/trips';
+import BusController from '../controllers/buses';
+import BookingController from '../controllers/bookings';
+import {
   internalServerErrorResponse,
   badRequestResponse,
-} = require('../helpers/errorHandler');
-const generateSeatNumber = require('../helpers/generateSeatNumber');
+} from '../helpers/errorHandler';
+import generateSeatNumber from '../helpers/generateSeatNumber';
 
-class BookingMiddleware {
+export default class BookingMiddleware {
   static async validateBooking(req, res, next) {
     try {
       const {
@@ -56,5 +56,3 @@ class BookingMiddleware {
     }
   }
 }
-
-module.exports = BookingMiddleware;

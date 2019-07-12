@@ -1,12 +1,12 @@
-const { Pool } = require('pg');
-const debug = require('debug');
-const dotenv = require('dotenv');
+import { Pool } from 'pg';
+import debug from 'debug';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 const connectionString = process.env.TEST_DATABASE_URL;
 
-class Model {
+export default class Model {
   constructor(table) {
     this.table = table;
     this.pool = process.env.NODE_ENV === 'test' ? new Pool({ connectionString }) : new Pool();
@@ -40,5 +40,3 @@ class Model {
     return rows;
   }
 }
-
-module.exports = Model;
