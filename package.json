@@ -9,7 +9,7 @@
     "test": "NODE_ENV=test babel-node spec/run.js",
     "coveralls-coverage": "coveralls < ./coverage/lcov.info",
     "codeclimate-coverage": "codeclimate-test-reporter < ./coverage/lcov.info",
-    "test:coverage": "NODE_ENV=test nyc jasmine && cat ./coverage/lcov.info | npm run coveralls-coverage | npm run coveralls-coverage && rm -rf ./coverage",
+    "test:coverage": "NODE_ENV=test nyc jasmine && cat ./coverage/lcov.info && npm run coveralls-coverage && npm run coveralls-coverage && rm -rf ./coverage",
     "lint": "eslint '**/*.js'"
   },
   "repository": {
