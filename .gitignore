@@ -3,3 +3,4 @@ node_modules
 .coveralls.yml
 .package-lock.json
 coverage/
+.nyc_output/
