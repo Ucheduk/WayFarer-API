@@ -1,9 +1,7 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
 const Model = require('../models/Model');
+const generateJwtToken = require('../helpers/generateJwtToken');
 
-dotenv.config();
 
 const {
   internalServerErrorResponse,
@@ -40,8 +38,7 @@ class UserController {
           'id, email, first_name, last_name, is_admin',
         );
       const { id, is_admin: isAdmin } = data[0];
-      const jwtPrivateKey = process.env.NODE_ENV === 'test' ? process.env.TEST_JWT_PRIVATE_KEY || process.env.JWT_PRIVATE_KEY : process.env.JWT_PRIVATE_KEY;
-      const token = jwt.sign({ email }, jwtPrivateKey);
+      const token = generateJwtToken({ user_id: id, is_admin: isAdmin });
       return res.status(201).json({
         status: 'success',
         data: {
@@ -66,8 +63,7 @@ class UserController {
       const { id, password: hashPassword, is_admin: isAdmin } = data[0];
       const validPassword = await bcrypt.compare(password, hashPassword);
       if (!validPassword) return badRequestResponse(req, res, 'Invalid password');
-      const jwtPrivateKey = process.env.NODE_ENV === 'test' ? process.env.TEST_JWT_PRIVATE_KEY || process.env.JWT_PRIVATE_KEY : process.env.JWT_PRIVATE_KEY;
-      const token = jwt.sign({ email }, jwtPrivateKey);
+      const token = generateJwtToken({ user_id: id, is_admin: isAdmin });
       return res.status(201).json({
         status: 'success',
         data: {

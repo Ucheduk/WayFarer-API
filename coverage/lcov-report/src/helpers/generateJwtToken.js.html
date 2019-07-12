@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/controllers/buses.js</title>
+    <title>Code coverage report for src/helpers/generateJwtToken.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,32 +16,32 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> buses.js
+      <a href="../../index.html">All files</a> / <a href="index.html">src/helpers</a> generateJwtToken.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/3</span>
+        <span class='fraction'>6/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/4</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
-        <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/1</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/3</span>
+        <span class='fraction'>6/6</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -53,23 +53,23 @@
 8
 9
 10</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Model = require('../models/Model');
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 &nbsp;
-class BusController {
-<span class="fstat-no" title="function not covered" >  st</span>atic model() {
-<span class="cstat-no" title="statement not covered" >    return new Model('bus');</span>
-  }
-}
+dotenv.config();
 &nbsp;
-module.exports = BusController;
+module.exports = (payload) =&gt; {
+  const jwtPrivateKey = process.env.NODE_ENV === 'test' ? process.env.TEST_JWT_PRIVATE_KEY || <span class="branch-1 cbranch-no" title="branch not covered" >process.env.JWT_PRIVATE_KEY </span>: <span class="branch-1 cbranch-no" title="branch not covered" >process.env.JWT_PRIVATE_KEY;</span>
+  return jwt.sign(payload, jwtPrivateKey);
+};
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
