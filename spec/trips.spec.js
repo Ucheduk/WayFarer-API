@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 const httpMocks = require('node-mocks-http');
 const TripController = require('../src/controllers/trips');
-const TripMiddleware = require('../src/middlewares/trips');
+const AuthMiddleware = require('../src/middlewares/auth');
 const UserController = require('../src/controllers/users');
 
 // POST - Trips Route
@@ -92,7 +92,7 @@ describe('Can user create trips Route - POST /api/v1/trips', () => {
           },
         });
         const res = httpMocks.createResponse();
-        await TripMiddleware.auth(req, res);
+        await AuthMiddleware.auth(req, res);
         const result = res._getJSONData();
         expect(res.statusCode).toBe(403);
         expect(result.error).toBe('Access denied. User not registered.');
@@ -137,7 +137,7 @@ describe('Can user create trips Route - POST /api/v1/trips', () => {
           },
         });
         const res = httpMocks.createResponse();
-        await TripMiddleware.auth(req, res);
+        await AuthMiddleware.auth(req, res);
         const result = res._getJSONData();
         expect(res.statusCode).toBe(401);
         expect(result.error).toBe('Access denied. No token provided.');
@@ -183,7 +183,7 @@ describe('Can user create trips Route - POST /api/v1/trips', () => {
           },
         });
         const res = httpMocks.createResponse();
-        await TripMiddleware.auth(req, res);
+        await AuthMiddleware.auth(req, res);
         const result = res._getJSONData();
         expect(res.statusCode).toBe(400);
         expect(result.error).toBe('Invalid token.');
@@ -229,7 +229,7 @@ describe('Can user create trips Route - POST /api/v1/trips', () => {
           },
         });
         const res = httpMocks.createResponse();
-        await TripMiddleware.admin(req, res);
+        await AuthMiddleware.admin(req, res);
         const result = res._getJSONData();
         expect(res.statusCode).toBe(403);
         expect(result.error).toBe('Access denied. User must be an Admin.');
@@ -315,7 +315,7 @@ describe('Can user get trips Route - GET /api/v1/trips', () => {
           },
         });
         const res = httpMocks.createResponse();
-        await TripMiddleware.auth(req, res);
+        await AuthMiddleware.auth(req, res);
         const result = res._getJSONData();
         expect(res.statusCode).toBe(400);
         expect(result.error).toBe('Invalid token.');
@@ -355,7 +355,7 @@ describe('Can user get trips Route - GET /api/v1/trips', () => {
           },
         });
         const res = httpMocks.createResponse();
-        await TripMiddleware.auth(req, res);
+        await AuthMiddleware.auth(req, res);
         const result = res._getJSONData();
         expect(res.statusCode).toBe(403);
         expect(result.error).toBe('Access denied. User not registered.');
@@ -394,7 +394,7 @@ describe('Can user get trips Route - GET /api/v1/trips', () => {
           },
         });
         const res = httpMocks.createResponse();
-        await TripMiddleware.auth(req, res);
+        await AuthMiddleware.auth(req, res);
         const result = res._getJSONData();
         expect(res.statusCode).toBe(401);
         expect(result.error).toBe('Access denied. No token provided.');

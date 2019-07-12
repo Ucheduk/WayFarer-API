@@ -4,12 +4,12 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const connectionString = process.env.NODE_ENV === 'test' ? process.env.TEST_DATABASE_URL || process.env.DATABASE_URL : process.env.DATABASE_URL;
+const connectionString = process.env.TEST_DATABASE_URL;
 
 class Model {
   constructor(table) {
     this.table = table;
-    this.pool = new Pool({ connectionString });
+    this.pool = process.env.NODE_ENV === 'test' ? new Pool({ connectionString }) : new Pool();
     this.pool.on('error', (err) => {
       debug('dev')('Unexpected error on idle client', err);
       process.exit(-1);

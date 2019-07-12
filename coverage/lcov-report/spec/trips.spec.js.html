@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for spec/trips.spec.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">spec</a> trips.spec.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">61.76% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>105/170</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>29/29</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">61.76% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>105/170</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* eslint-disable consistent-return */
+/* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+const httpMocks = require('node-mocks-http');
+const TripController = require('../src/controllers/trips');
+const AuthMiddleware = require('../src/middlewares/auth');
+const UserController = require('../src/controllers/users');
+&nbsp;
+// POST - Trips Route
+describe('Can user create trips Route - POST /api/v1/trips', () =&gt; {
+  let data;
+&nbsp;
+  describe('If user has valid token and admin role', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return success response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trips',
+          body: {
+            token: data.data.token,
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await TripController.createTrip(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(201);</span>
+<span class="cstat-no" title="statement not covered" >        expect(Object.keys(result)).toEqual(['status', 'data']);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.data.trip_id &amp;&amp; result.data.bus_id).toMatch(/\d{1,}/);</span>
+<span class="cstat-no" title="statement not covered" >        expect(Object.keys(result.data).length).toBe(7);</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+&nbsp;
+  describe('If user_id is invalid', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return forbidden error response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trips',
+          body: {
+            token: data.data.token,
+            user_id: 0,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await AuthMiddleware.auth(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(403);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.error).toBe('Access denied. User not registered.');</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.status).toBe('error');</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+&nbsp;
+  describe('If token is not provided', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return unauthorized error response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trips',
+          body: {
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await AuthMiddleware.auth(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(401);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.error).toBe('Access denied. No token provided.');</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.status).toBe('error');</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+&nbsp;
+  describe('If token is invalid', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return bad request error response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trips',
+          body: {
+            token: 'invalid.token',
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await AuthMiddleware.auth(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(400);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.error).toBe('Invalid token.');</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.status).toBe('error');</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+&nbsp;
+  describe('If user do not have admin role', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'john@test.com',
+        password: 'avocados123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return unauthorized error response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trips',
+          body: {
+            token: data.data.token,
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await AuthMiddleware.admin(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(403);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.error).toBe('Access denied. User must be an Admin.');</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.status).toBe('error');</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+});
+&nbsp;
+&nbsp;
+// GET - Trips Route
+describe('Can user get trips Route - GET /api/v1/trips', () =&gt; {
+  describe('If user has valid token', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return success response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'GET',
+          url: '/api/v1/trips',
+          body: {
+            token: data.data.token,
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await TripController.getTrips(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(200);</span>
+<span class="cstat-no" title="statement not covered" >        expect(Object.keys(result)).toEqual(['status', 'data']);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.data[0].trip_id &amp;&amp; result.data[0].bus_id).toMatch(/\d{1,}/);</span>
+<span class="cstat-no" title="statement not covered" >        expect(Object.keys(result.data[0]).length).toBe(7);</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+  describe('If token is invalid', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return bad request error response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'GET',
+          url: '/api/v1/trips',
+          body: {
+            token: 'faketoken',
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await AuthMiddleware.auth(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(400);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.error).toBe('Invalid token.');</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.status).toBe('error');</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+  describe('If user_id is invalid', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return forbidden error response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'POST',
+          url: '/api/v1/trips',
+          body: {
+            token: data.data.token,
+            user_id: 0,
+            is_admin: data.data.isadmin,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await AuthMiddleware.auth(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(403);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.error).toBe('Access denied. User not registered.');</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.status).toBe('error');</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+  describe('If token is not provided', () =&gt; {
+    const request = httpMocks.createRequest({
+      method: 'POST',
+      url: '/api/v1/auth/signin',
+      body: {
+        email: 'admin@test.com',
+        password: 'bananas123',
+      },
+    });
+    const response = httpMocks.createResponse();
+    beforeEach(async () =&gt; {
+      try {
+        await UserController.signInUser(request, response);
+        data = response._getJSONData();
+      } catch (ex) {
+<span class="cstat-no" title="statement not covered" >        return ex;</span>
+      }
+    });
+    it('should return unauthorized error response', async () =&gt; {
+      try {
+        const req = httpMocks.createRequest({
+          method: 'GET',
+          url: '/api/v1/trips',
+          body: {
+            user_id: data.data.user_id,
+            is_admin: data.data.isadmin,
+          },
+        });
+        const res = <span class="cstat-no" title="statement not covered" >httpMocks.createResponse();</span>
+<span class="cstat-no" title="statement not covered" >        await AuthMiddleware.auth(req, res);</span>
+        const result = <span class="cstat-no" title="statement not covered" >res._getJSONData();</span>
+<span class="cstat-no" title="statement not covered" >        expect(res.statusCode).toBe(401);</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.error).toBe('Access denied. No token provided.');</span>
+<span class="cstat-no" title="statement not covered" >        expect(result.status).toBe('error');</span>
+      } catch (ex) {
+        return ex;
+      }
+    });
+  });
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Jul 12 2019 02:15:42 GMT+0100 (West Africa Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
