@@ -17,7 +17,7 @@ env:
 
 services:
   - postgresql
-  
+
 before_script:
   - psql -c 'create database wayfarer_test_db;' -U postgres
   - psql -c "ALTER USER postgres PASSWORD 'password'";
@@ -27,7 +27,7 @@ script:
   - npm test
 
 after_success:
-  - npm test
+  - npm test:coverage
 
 notifications:
   - email: flase
