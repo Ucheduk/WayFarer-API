@@ -1,4 +1,3 @@
-
 export const internalServerErrorResponse = (req, res, error) => res.status(500)
   .json({
     status: 'error',

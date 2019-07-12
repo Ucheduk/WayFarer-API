@@ -9,5 +9,10 @@ export default (router) => {
     BookingMiddleware.validateBooking,
     BookingController.createBooking,
   );
+  router.get(
+    '/bookings',
+    AuthMiddleware.auth,
+    BookingController.getBookings,
+  );
   return router;
 };

@@ -4,7 +4,7 @@ import BookingController from '../controllers/bookings';
 import {
   internalServerErrorResponse,
   badRequestResponse,
-} from '../helpers/errorHandler';
+} from '../helpers/errorHandlers';
 import generateSeatNumber from '../helpers/generateSeatNumber';
 
 export default class BookingMiddleware {

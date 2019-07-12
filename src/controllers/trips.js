@@ -2,7 +2,8 @@ import Model from '../models/Model';
 import {
   internalServerErrorResponse,
   nullResponse,
-} from '../helpers/errorHandler';
+} from '../helpers/errorHandlers';
+import changeIDKey from '../helpers/changeKeyID';
 
 export default class TripController {
   static model() {
@@ -51,22 +52,15 @@ export default class TripController {
   // Get all trips
   static async getTrips(req, res) {
     try {
-      const data = await TripController.model().select('*');
-      if (!data.length) return nullResponse(req, res, 'No Trip found.');
+      const tripData = await TripController.model().select('*');
+      if (!tripData.length) return nullResponse(req, res, 'No Trip found.');
 
-      // Change id key to trip_id
-      const changeIDKey = (d) => {
-        const { id, ...rest } = d;
-        return {
-          trip_id: id,
-          ...rest,
-        };
-      };
-      const newData = data.map(changeIDKey);
+      // Change trip id key to trip_id
+      const newTripData = changeIDKey('trip_id', tripData);
 
       return res.json({
         status: 'success',
-        data: newData,
+        data: newTripData,
       });
     } catch (e) {
       return internalServerErrorResponse(req, res, e.message);

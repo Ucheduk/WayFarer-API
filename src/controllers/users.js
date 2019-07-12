@@ -5,7 +5,7 @@ import {
   internalServerErrorResponse,
   badRequestResponse,
   checkAdminRoute,
-} from '../helpers/errorHandler';
+} from '../helpers/errorHandlers';
 
 
 export default class UserController {
