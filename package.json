@@ -7,7 +7,9 @@
     "dev": "DEBUG=dev nodemon --exec babel-node ./src/index.js",
     "test-init": "jasmine.js init",
     "test": "NODE_ENV=test babel-node spec/run.js",
-    "test:coveralls": "istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "coveralls-coverage": "coveralls < ./coverage/lcov.info",
+    "codeclimate-coverage": "codeclimate-test-reporter < ./coverage/lcov.info",
+    "test:coverage": "NODE_ENV=test nyc jasmine && cat ./coverage/lcov.info | npm run coveralls-coverage | npm run coveralls-coverage && rm -rf ./coverage",
     "lint": "eslint '**/*.js'"
   },
   "repository": {
@@ -29,15 +31,18 @@
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/node": "^7.5.0",
+    "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "^7.5.4",
+    "@babel/register": "^7.4.4",
+    "@babel/runtime": "^7.5.4",
+    "babel-plugin-istanbul": "^5.1.4",
+    "codeclimate-test-reporter": "^0.5.1",
     "coveralls": "^3.0.4",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.18.0",
-    "istanbul": "^1.1.0-alpha.1",
     "jasmine": "^3.4.0",
     "jasmine-console-reporter": "^3.1.0",
-    "jasmine-node": "^3.0.0",
     "node-mocks-http": "^1.7.6",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
@@ -51,5 +56,16 @@
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.11.0"
+  },
+  "nyc": {
+    "require": [
+      "@babel/register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "sourceMap": false,
+    "instrument": false
   }
 }
