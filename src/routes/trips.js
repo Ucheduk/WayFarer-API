@@ -13,6 +13,11 @@ export default (router) => {
     AuthMiddleware.auth,
     TripController.getTrips,
   );
+  router.get(
+    '/trips/?destination=destination',
+    AuthMiddleware.auth,
+    TripController.getTrips,
+  );
   router.patch(
     '/trips/:tripId',
     AuthMiddleware.auth,

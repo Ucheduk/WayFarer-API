@@ -5,6 +5,7 @@ import {
   badRequestResponse,
 } from '../helpers/errorHandlers';
 import changeIDKey from '../helpers/changeKeyID';
+import getTripsByDestination from '../helpers/getTripsByQuery';
 
 export default class TripController {
   static model() {
@@ -53,7 +54,10 @@ export default class TripController {
   // Get all trips
   static async getTrips(req, res) {
     try {
-      const tripData = await TripController.model().select('*');
+      let tripData;
+      const { destination } = req.query;
+      if (destination) tripData = await getTripsByDestination(destination, TripController);
+      else tripData = await TripController.model().select('*');
       if (!tripData.length) return nullResponse(req, res, 'No Trip found.');
 
       // Change trip id key to trip_id
