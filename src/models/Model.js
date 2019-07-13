@@ -28,6 +28,12 @@ export default class Model {
     return rows;
   }
 
+  async update(column, value, clause, queryData = '') {
+    const query = `UPDATE ${this.table} SET ${column}='${value}' ${clause} RETURNING ${queryData}`;
+    const { rows } = await this.pool.query(query);
+    return rows;
+  }
+
   async delete(clause) {
     const query = `DELETE FROM ${this.table} ${clause} RETURNING *`;
     const { rows } = await this.pool.query(query);

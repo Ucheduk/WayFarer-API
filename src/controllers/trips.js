@@ -2,6 +2,7 @@ import Model from '../models/Model';
 import {
   internalServerErrorResponse,
   nullResponse,
+  badRequestResponse,
 } from '../helpers/errorHandlers';
 import changeIDKey from '../helpers/changeKeyID';
 
@@ -67,14 +68,18 @@ export default class TripController {
     }
   }
 
-  static async deleteTrip(req, res) {
+  static async updateTrip(req, res) {
     try {
-      const { trip_id: tripId } = req.body;
-      await TripController.model()
-        .delete('id', tripId);
+      const { tripId } = req.params;
+      const tripData = await TripController.model()
+        .update('status', 'cancelled', `WHERE id=${tripId}`, '*');
+      if (!tripData.length) return badRequestResponse(req, res, 'No trip found to cancelled.');
+
       return res.status(202).json({
         status: 'success',
-        success: 'Trip was deleted successfully',
+        data: {
+          message: 'Trip cancelled successfully',
+        },
       });
     } catch (e) {
       return internalServerErrorResponse(req, res, e.message);
