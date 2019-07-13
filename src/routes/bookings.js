@@ -14,5 +14,10 @@ export default (router) => {
     AuthMiddleware.auth,
     BookingController.getBookings,
   );
+  router.delete(
+    '/bookings/:bookingId',
+    AuthMiddleware.auth,
+    BookingController.deleteBooking,
+  );
   return router;
 };

@@ -4,10 +4,6 @@
 import request from 'supertest';
 import server from '../src/index';
 import Model from '../src/models/Model';
-// import httpMocks from 'node-mocks-http';
-// import TripController from '../src/controllers/trips';
-// import AuthMiddleware from '../src/middlewares/auth';
-// import UserController from '../src/controllers/users';
 
 const TripModel = new Model('trip');
 
@@ -25,7 +21,7 @@ describe('/api/v1/tips', () => {
   afterEach(async () => {
     try {
       server.close();
-      await TripModel.deleteAll();
+      await TripModel.truncate();
     } catch (ex) {
       return ex;
     }
@@ -178,7 +174,7 @@ describe('/api/v1/tips', () => {
       afterEach(async () => {
         try {
           server.close();
-          await TripModel.deleteAll();
+          await TripModel.truncate();
         } catch (ex) {
           return ex;
         }

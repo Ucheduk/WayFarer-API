@@ -28,13 +28,13 @@ export default class Model {
     return rows;
   }
 
-  async delete(clause, value) {
-    const query = `DELETE FROM ${this.table} WHERE ${clause}='${value}' RETURNING *`;
+  async delete(clause) {
+    const query = `DELETE FROM ${this.table} ${clause} RETURNING *`;
     const { rows } = await this.pool.query(query);
     return rows;
   }
 
-  async deleteAll() {
+  async truncate() {
     const query = `TRUNCATE TABLE ${this.table} CASCADE`;
     const { rows } = await this.pool.query(query);
     return rows;

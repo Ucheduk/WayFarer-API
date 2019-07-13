@@ -4,6 +4,9 @@
 import httpMocks from 'node-mocks-http';
 import UserController from '../src/controllers/users';
 import UserMiddleware from '../src/middlewares/users';
+import Model from '../src/models/Model';
+
+const UserModel = new Model('users');
 
 // SignUp
 describe('Can user signup Route - POST /api/v1/auth/signup', () => {
@@ -19,7 +22,7 @@ describe('Can user signup Route - POST /api/v1/auth/signup', () => {
       },
     });
     const response = httpMocks.createResponse();
-    afterEach(() => UserController.deleteUser(request, response));
+    afterEach(async () => UserModel.delete('WHERE email=\'newuser@test.com\''));
     it('should create a new user', async () => {
       try {
         await UserController.signUpUser(request, response);
@@ -94,7 +97,7 @@ describe('Can admin user signup Route - POST /api/v1/admin/auth/signup', () => {
       },
     });
     const response = httpMocks.createResponse();
-    afterEach(() => UserController.deleteUser(request, response));
+    afterEach(async () => UserModel.delete('WHERE email=\'newuser@test.com\''));
     it('should create a new admin user', async () => {
       try {
         await UserController.signUpUser(request, response);

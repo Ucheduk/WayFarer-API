@@ -3,6 +3,7 @@ import UserController from './users';
 import {
   internalServerErrorResponse,
   nullResponse,
+  badRequestResponse,
 } from '../helpers/errorHandlers';
 import changeIDKey from '../helpers/changeKeyID';
 
@@ -90,6 +91,25 @@ export default class BookingController {
       return res.json({
         status: 'success',
         data: newBookingData,
+      });
+    } catch (e) {
+      return internalServerErrorResponse(req, res, e.message);
+    }
+  }
+
+  static async deleteBooking(req, res) {
+    try {
+      const { bookingId } = req.params;
+      const { userIdPayload } = req.user;
+      const deleteData = await BookingController.model()
+        .delete(`WHERE id=${bookingId} AND user_id=${userIdPayload}`);
+      if (!deleteData.length) return badRequestResponse(req, res, 'No Booking found to delete.');
+
+      return res.status(202).json({
+        status: 'success',
+        data: {
+          message: 'Booking deleted successfully',
+        },
       });
     } catch (e) {
       return internalServerErrorResponse(req, res, e.message);
