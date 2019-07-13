@@ -29,7 +29,7 @@ export default class Model {
   }
 
   async update(column, value, clause, queryData = '') {
-    const query = `UPDATE ${this.table} SET ${column}='${value}' ${clause} RETURNING ${queryData}`;
+    const query = `UPDATE ${this.table} SET ${column}=${value} ${clause} RETURNING ${queryData}`;
     const { rows } = await this.pool.query(query);
     return rows;
   }

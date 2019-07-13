@@ -76,7 +76,7 @@ describe('/api/v1/bookings', () => {
         const { user_id: userId, token } = data.body.data;
         const res = await request(server).post('/api/v1/bookings').send({ token, user_id: userId, trip_id: -1 });
         expect(res.status).toBe(400);
-        expect(res.body.error).toBe('Trip not created');
+        expect(res.body.error).toBe('Trip not created.');
       } catch (ex) {
         return ex;
       }

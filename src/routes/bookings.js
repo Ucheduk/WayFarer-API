@@ -14,6 +14,12 @@ export default (router) => {
     AuthMiddleware.auth,
     BookingController.getBookings,
   );
+  router.patch(
+    '/bookings/:bookingId',
+    AuthMiddleware.auth,
+    BookingMiddleware.validateSeatNumber,
+    BookingController.updateBooking,
+  );
   router.delete(
     '/bookings/:bookingId',
     AuthMiddleware.auth,

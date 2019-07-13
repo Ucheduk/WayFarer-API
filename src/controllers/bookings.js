@@ -97,6 +97,26 @@ export default class BookingController {
     }
   }
 
+  static async updateBooking(req, res) {
+    try {
+      const { userIdPayload } = req.user;
+      const { seat_number: seatNumber } = req.body;
+      const { bookingId } = req.params;
+      const updateData = await BookingController.model()
+        .update('seat_number', seatNumber, `WHERE id=${bookingId} AND user_id=${userIdPayload}`, '*');
+      if (!updateData.length) return badRequestResponse(req, res, 'Seat number Already chosen.');
+
+      return res.status(202).json({
+        status: 'success',
+        data: {
+          message: 'Seat number changed successfully',
+        },
+      });
+    } catch (e) {
+      return internalServerErrorResponse(req, res, e.message);
+    }
+  }
+
   static async deleteBooking(req, res) {
     try {
       const { bookingId } = req.params;

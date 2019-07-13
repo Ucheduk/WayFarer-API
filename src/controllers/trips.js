@@ -5,7 +5,7 @@ import {
   badRequestResponse,
 } from '../helpers/errorHandlers';
 import changeIDKey from '../helpers/changeKeyID';
-import getTripsByDestination from '../helpers/getTripsByQuery';
+import getTripsByDestination from '../helpers/getByQuery';
 
 export default class TripController {
   static model() {
@@ -76,8 +76,9 @@ export default class TripController {
   static async updateTrip(req, res) {
     try {
       const { tripId } = req.params;
+      if (!Number.isInteger(parseInt(tripId, 10))) return badRequestResponse(req, res, 'Invalid trip Id. Must be an Integer.');
       const tripData = await TripController.model()
-        .update('status', 'cancelled', `WHERE id=${tripId}`, '*');
+        .update('status', "'cancelled'", `WHERE id=${tripId}`, '*');
       if (!tripData.length) return badRequestResponse(req, res, 'No trip found to cancelled.');
 
       return res.status(202).json({
