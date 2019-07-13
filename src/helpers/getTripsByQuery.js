@@ -1,4 +1,4 @@
-export default async (query, controller) => {
-  if (query) return controller.model().select('*', `WHERE destination='${query}'`);
+export default async (column, query, controller) => {
+  if (query) return controller.model().select('*', `WHERE ${column}='${query}'`);
   return false;
 };

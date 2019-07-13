@@ -154,6 +154,7 @@ describe('/api/v1/tips', () => {
     });
     describe('With trip found', () => {
       let destinationQuery;
+      let originQuery;
       beforeEach(async () => {
         try {
           const { user_id: userId, is_admin: isAdmin, token } = data.body.data;
@@ -167,8 +168,9 @@ describe('/api/v1/tips', () => {
             trip_date: '2019-09-12',
             fare: 20000,
           });
-          const { destination } = tripData.body.data;
+          const { origin, destination } = tripData.body.data;
           destinationQuery = destination;
+          originQuery = origin;
           return server;
         } catch (ex) {
           return ex;
@@ -195,7 +197,7 @@ describe('/api/v1/tips', () => {
           return ex;
         }
       });
-      it('should return 200 if token, user_id is valid with filtered query data', async () => {
+      it('should return 200 if token, user_id is valid with destination filtered query data', async () => {
         try {
           const { user_id: userId, token } = data.body.data;
           const res = await request(server).get(`/api/v1/trips/?destination=${destinationQuery}`).send({
@@ -213,6 +215,34 @@ describe('/api/v1/tips', () => {
         try {
           const { user_id: userId, token } = data.body.data;
           const res = await request(server).get('/api/v1/trips/?destination=fake_destination').send({
+            token,
+            user_id: userId,
+          });
+          expect(res.status).toBe(404);
+          expect(Object.keys(res.body)).toEqual(['status', 'error']);
+          expect(res.body.error).toBe('No Trip found.');
+        } catch (ex) {
+          return ex;
+        }
+      });
+      it('should return 200 if token, user_id is valid with origin filtered query data', async () => {
+        try {
+          const { user_id: userId, token } = data.body.data;
+          const res = await request(server).get(`/api/v1/trips/?origin=${originQuery}`).send({
+            token,
+            user_id: userId,
+          });
+          expect(res.status).toBe(200);
+          expect(Object.keys(res.body)).toEqual(['status', 'data']);
+          expect(res.body.data[0].origin).toBe(`${originQuery}`);
+        } catch (ex) {
+          return ex;
+        }
+      });
+      it('should return 404 if token, user_id is valid and originQuery data is not found', async () => {
+        try {
+          const { user_id: userId, token } = data.body.data;
+          const res = await request(server).get('/api/v1/trips/?origin=fake_origin').send({
             token,
             user_id: userId,
           });

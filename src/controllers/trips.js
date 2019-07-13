@@ -55,9 +55,10 @@ export default class TripController {
   static async getTrips(req, res) {
     try {
       let tripData;
-      const { destination } = req.query;
-      if (destination) tripData = await getTripsByDestination(destination, TripController);
-      else tripData = await TripController.model().select('*');
+      const { destination, origin } = req.query;
+      if (origin) tripData = await getTripsByDestination('origin', origin, TripController);
+      if (destination) tripData = await getTripsByDestination('destination', destination, TripController);
+      if (!origin && !destination) tripData = await TripController.model().select('*');
       if (!tripData.length) return nullResponse(req, res, 'No Trip found.');
 
       // Change trip id key to trip_id
