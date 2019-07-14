@@ -29,8 +29,7 @@ script:
   - npm run test:coverage
 
 after_script:
-  - ./cc-test-reporter format-coverage -t lcov --prefix $? # auto looks for ./coverage/lcov.info
-  - ./cc-test-reporter after-build -t lcov --exit-code $? # auto uploads ./coverage/lcov.info and ./coverage/codeclimate.json
+  - ./cc-test-reporter -p ./coverage/lcov.info after-build --exit-code $TRAVIS_TEST_RESULT
 
 notifications:
   - email: flase
