@@ -8,7 +8,7 @@
     "test-init": "jasmine.js init",
     "test": "NODE_ENV=test babel-node spec/run.js",
     "coveralls-coverage": "coveralls < ./coverage/lcov.info",
-    "test:coverage": "NODE_ENV=test nyc jasmine && npm run coveralls-coverage && rm -rf ./coverage",
+    "test:coverage": "NODE_ENV=test nyc jasmine && npm run coveralls-coverage",
     "lint": "eslint '**/*.js'"
   },
   "repository": {
