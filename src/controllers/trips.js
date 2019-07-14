@@ -16,7 +16,6 @@ export default class TripController {
   static async createTrip(req, res) {
     try {
       const {
-        // user_id: userId,
         bus_id: busId,
         origin,
         destination,
@@ -24,13 +23,19 @@ export default class TripController {
         fare,
       } = req.body;
 
-      Date.parse(tripDate); // "2019-12-12" => "2019-12-11T23:00:00.000Z"
+      const newBusId = busId || 1;
+      const newOrigin = origin || 'Lagos';
+      const newDestination = destination || 'Abuja';
+      const newTripDate = tripDate || '2019-12-12';
+      const newFare = fare || '100000';
+
+      Date.parse(newTripDate); // "2019-12-12" => "2019-12-11T23:00:00.000Z"
 
       // Creates new user and return user data
       const data = await TripController.model()
         .insert(
           'bus_id, origin, destination, trip_date, fare',
-          `'${busId}', '${origin}', '${destination}', '${tripDate}', '${fare}'`,
+          `'${newBusId}', '${newOrigin}', '${newDestination}', '${newTripDate}', '${newFare}'`,
           'id, bus_id, origin, destination, trip_date, fare, status',
         );
 

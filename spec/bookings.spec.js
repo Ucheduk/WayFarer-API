@@ -17,6 +17,7 @@ describe('/api/v1/bookings', () => {
     try {
       data = await request(server).post('/api/v1/auth/signin').send({ email: 'admin@test.com', password: 'bananas123' });
       const { user_id: userId, is_admin: isAdmin, token } = data.body.data;
+      // console.log(data.body.data);
       const data2 = await request(server).post('/api/v1/trips').send({
         token,
         is_admin: isAdmin,
@@ -26,8 +27,9 @@ describe('/api/v1/bookings', () => {
         destination: 'Abuja',
         trip_date: '2019-09-12',
         fare: 50000,
-      });
+      }).set('token', token);
       const { trip_id: tripNo } = data2.body.data;
+      // console.log(data2.header);
       tripId = tripNo;
       return server;
     } catch (ex) {
@@ -63,18 +65,23 @@ describe('/api/v1/bookings', () => {
     });
     it('should return 403 if user_id is invalid', async () => {
       try {
-        const { token } = data.body.data;
-        const res = await request(server).post('/api/v1/bookings').send({ token });
+        const { is_admin: isAdmin, token } = data.body.data;
+        const res = await request(server).post('/api/v1/bookings').send({ token, user_id: -1, is_admin: isAdmin });
         expect(res.status).toBe(403);
-        expect(res.body.error).toBe('Access denied. User not registered.');
+        expect(res.body.error).toBe('Access denied. Worng user id.');
       } catch (ex) {
         return ex;
       }
     });
     it('should return 400 if trip_id is invalid', async () => {
       try {
-        const { user_id: userId, token } = data.body.data;
-        const res = await request(server).post('/api/v1/bookings').send({ token, user_id: userId, trip_id: -1 });
+        const { user_id: userId, is_admin: isAdmin, token } = data.body.data;
+        const res = await request(server).post('/api/v1/bookings').send({
+          token,
+          user_id: userId,
+          is_admin: isAdmin,
+          trip_id: -1,
+        });
         expect(res.status).toBe(400);
         expect(res.body.error).toBe('Trip not created.');
       } catch (ex) {
@@ -107,7 +114,6 @@ describe('/api/v1/bookings', () => {
     }
   });
   afterEach(() => server.close());
-
   describe('GET /', () => {
     it('should return 401 if users is not logged in', async () => {
       try {
@@ -132,9 +138,9 @@ describe('/api/v1/bookings', () => {
     it('should return 403 if user_id is invalid', async () => {
       try {
         const { token } = data.body.data;
-        const res = await request(server).get('/api/v1/bookings').send({ token });
+        const res = await request(server).get('/api/v1/bookings').send({ token, user_id: -1 });
         expect(res.status).toBe(403);
-        expect(res.body.error).toBe('Access denied. User not registered.');
+        expect(res.body.error).toBe('Access denied. Worng user id.');
       } catch (ex) {
         return ex;
       }
@@ -237,9 +243,9 @@ describe('/api/v1/bookings/:bookingsId', () => {
     it('should return 403 if user_id is invalid', async () => {
       try {
         const { token } = data.body.data;
-        const res = await request(server).delete('/api/v1/bookings/1').send({ token });
+        const res = await request(server).delete('/api/v1/bookings/1').send({ token, user_id: -1 });
         expect(res.status).toBe(403);
-        expect(res.body.error).toBe('Access denied. User not registered.');
+        expect(res.body.error).toBe('Access denied. Worng user id.');
       } catch (ex) {
         return ex;
       }
