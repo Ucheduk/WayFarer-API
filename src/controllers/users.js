@@ -47,7 +47,7 @@ export default class UserController {
         },
       });
     } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
+      return internalServerErrorResponse(req, res);
     }
   }
 
@@ -72,7 +72,7 @@ export default class UserController {
         },
       });
     } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
+      return internalServerErrorResponse(req, res);
     }
   }
 }
