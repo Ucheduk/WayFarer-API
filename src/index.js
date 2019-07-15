@@ -16,7 +16,7 @@ app.use('/api/v1', tripRouter(router));
 app.use('/api/v1', bookingRouter(router));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 const server = app.listen(port, () => debug('dev')(`Listening on port ${port}...`));
 
 export default server;
