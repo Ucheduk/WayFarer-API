@@ -15,8 +15,9 @@
     "dev": "NODE_ENV=development npm-run-all server",
     "clean": "rimraf dist",
     "build": "babel ./src --out-dir dist",
-    "prod": "NODE_ENV=production npm-run-all clean build server:prod",
-    "watch": "nodemon"
+    "prod": "NODE_ENV=production npm run server:prod",
+    "watch": "nodemon",
+    "postinstall": "npm run build"
   },
   "engines": {
     "node": "10.15.3",
