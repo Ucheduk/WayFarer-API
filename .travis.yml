@@ -1,44 +1,34 @@
 language: node_js
-
 node_js:
-  - "stable"
-
+- stable
 install:
-  - npm install
-
+- npm install
 cache:
   directories:
-    - "node_modules"
-
+  - node_modules
 env:
   global:
-    - NODE_ENV=test
-
+  - NODE_ENV=test
 services:
-  - postgresql
-
+- postgresql
 deploy:
   provider: heroku
   api_key:
-    secure: "HO4TtrqZg1/C8LCAXHBJCeFHokTqdt6xs5Vuv9fVocT6zxinMg86siQrTxtW4foNM0kjnwLP1HDAA5xVboKm4+/4/MdFCFzdpqleAduxBohVVntvK55yms0kK+gncSUKtUJ/p6q5P5h/107hDUU3XOIBR5jkCp2kukusxhWIE77jT4R5nB4U4YLCN3ZJsPpnOaEslmuYeOKEsfVBOjuik8blop7QS1eYilo0VewsJO5Y3WgTne8EKOpq5G9NYKvW1uni3lUE6Xu/fvb6IPQB1Yj+ps7KwLbLMtnXloAw7/QTfNLwWAnhpcPD8SEbOcj6jJ139o0Tm9jODLHdWyHqFLi1l/ZO2J98FUe8bISpCiMLBJPorXX5rdKiRnFFA49Zq9M9TiSsnZohTb5X9WJN9HaM+RdDGws72WRCJ2DYxNqfXuPp3vGyKqDY3ZIARvQ9HUfoelUaHMuEe626bP13FZzTkwkGMQViSw+iieUO706xVJ57Zl1Z4wgi0mBBilys4oz9yJmxi40N368DVY3TEUxrdPA3uyc1HkoNYTpJK+b+keFo7Sd2C4NTtUwz8pP1+XsF3Ch5lwpCTd1AnhL0oP4Pf+n5EEbyl9OdyPGHiQTBl6Y2Yj2R8r+ZoftnCSq2Dy8pW7tNvy90GIa2DTEG/i4+Ohkd1WcFLVgXikx6kmE="
+    secure: lpotBmr3RkI/C6BqHzU1JLW3qxQIIV8TdgoRZquwrSRDL/Oj05K4zdTm9Mps/6jIH5P9hRRJSmk1lUMSlMh8Vv5YCHFQfEYAJYq80tJXeyEG6YfPTxFCNuwGK7PCWWwyvIov9f/L+X6gZDyMDStwLL+ZDyJDte8X3a3aqlxXYQoe/7uQ/0PPYF8Do4vR5rKc9FrFVfX25QzRnWMcseEuEstXnK6/69MSmEA74LPtA7HBVXrwyg7BOQAznz3edDK4TE71+/hvmXeW/TgjuTXGoHcFIBQyxGl8EqHVpbz2kbDFaQoJ3a6m9vA/IZRhk5R+8U/s4cEHxgxJPjo4xsayMFvA+0LU917kxHzwGOo7tTybIoVoIjWMlkpEzYzUkNCkdHLCGqNm/LKUFNHEy0k2Ph1ZBKhkjaNPyJ5Doa5pGD3CjGApjXNCB8rKKklLcrRBtNNO2GCbX+A9LJ8c6TjGW/k192PR8XfTyfTvM/SLAmVc89v4o4jH73lAz3n68h0Nk4OUkZA59WShwe5PgfCr3SykxdjPUBMujCGvvU24mwWiDvpDzv1R5X/LL3z7yjfdHXPvKn66W0sYWDUy8ap3eERXkKMoS8+LFUFcVE+JsG8jFh8a+gJAloTQXPHnG9ORmwHMzmv8yiADjud4lt1UQXNnk0dgMjiP+z9q6ZahkFE=
   app: wayfarerapi-andela
   on:
     repo: Ucheduk/WayFarer-API
     branch: develop
-
 before_script:
-  - psql -c 'create database wayfarer_test_db;' -U postgres
-  - psql -c "ALTER USER postgres PASSWORD 'password'";
-  - sh ./setup-test-db.sh
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-
+- psql -c 'create database wayfarer_test_db;' -U postgres
+- psql -c "ALTER USER postgres PASSWORD 'password'";
+- sh ./setup-test-db.sh
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
 script:
-  - npm run test:coverage
-
+- npm run test:coverage
 after_script:
-  - ./cc-test-reporter -p ./coverage/lcov.info after-build --exit-code $TRAVIS_TEST_RESULT
-
+- "./cc-test-reporter -p ./coverage/lcov.info after-build --exit-code $TRAVIS_TEST_RESULT"
 notifications:
-  - email: flase
+- email: flase
