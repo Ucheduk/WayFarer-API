@@ -4,12 +4,23 @@
   "description": "A public bus transportation booking server back-end API",
   "main": "index.js",
   "scripts": {
-    "dev": "DEBUG=dev nodemon --exec babel-node ./src/index.js",
     "test-init": "jasmine.js init",
     "test": "NODE_ENV=test babel-node spec/run.js",
     "coveralls-coverage": "coveralls < ./coverage/lcov.info",
     "test:coverage": "NODE_ENV=test nyc jasmine && npm run coveralls-coverage",
-    "lint": "eslint '**/*.js'"
+    "lint": "eslint '**/*.js'",
+    "start": "npm run prod",
+    "server": "babel-node ./src/index.js",
+    "server:prod": "node ./dist/index.js",
+    "dev": "NODE_ENV=development npm-run-all server",
+    "clean": "rimraf dist",
+    "build": "babel ./src --out-dir dist",
+    "prod": "NODE_ENV=production npm-run-all clean build server:prod",
+    "watch": "nodemon"
+  },
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.9.0"
   },
   "repository": {
     "type": "git",
@@ -28,6 +39,7 @@
   },
   "homepage": "https://github.com/Ucheduk/WayFarer-API#readme",
   "devDependencies": {
+    "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.4",
     "@babel/node": "^7.5.0",
     "@babel/plugin-transform-runtime": "^7.5.0",
@@ -53,7 +65,9 @@
     "express": "^4.17.1",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
+    "npm-run-all": "^4.1.5",
     "pg": "^7.11.0",
+    "rimraf": "^2.6.3",
     "swagger-ui-express": "^4.0.7"
   },
   "nyc": {
@@ -66,5 +80,11 @@
     ],
     "sourceMap": false,
     "instrument": false
-  }
+  },
+  "private": true,
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "IE 10"
+  ]
 }
