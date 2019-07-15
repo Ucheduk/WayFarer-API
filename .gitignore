@@ -1,7 +1,9 @@
 node_modules
 dist
+coverage
 .env
 .coveralls.yml
 .package-lock.json
 .nyc_output/
 coverage
+
