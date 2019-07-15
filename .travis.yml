@@ -24,6 +24,9 @@ deploy:
   app: wayfarerapi-andela
   on:
     repo: Ucheduk/WayFarer-API
+    branches:   
+      only:     
+        - develop
 
 before_script:
   - psql -c 'create database wayfarer_test_db;' -U postgres
