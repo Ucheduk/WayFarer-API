@@ -51,17 +51,17 @@ describe('/api/v1/tips', () => {
     it('should return 403 if user_id is invalid', async () => {
       try {
         const { token } = data.body.data;
-        const res = await request(server).post('/api/v1/trips').send({ token });
+        const res = await request(server).post('/api/v1/trips').send({ token, user_id: -1 });
         expect(res.status).toBe(403);
-        expect(res.body.error).toBe('Access denied. User not registered.');
+        expect(res.body.error).toBe('Access denied. Worng user id.');
       } catch (ex) {
         return ex;
       }
     });
-    it('should return 400 if not Admin', async () => {
+    it('should return 403 if not Admin', async () => {
       try {
         const { user_id: userId, token } = data.body.data;
-        const res = await request(server).post('/api/v1/trips').send({ token, user_id: userId });
+        const res = await request(server).post('/api/v1/trips').send({ token, user_id: userId, is_admin: false });
         expect(res.status).toBe(403);
         expect(res.body.error).toBe('Access denied. User must be an Admin.');
         expect(res.body.status).toBe('error');
@@ -131,9 +131,9 @@ describe('/api/v1/tips', () => {
     it('should return 403 if user_id is invalid', async () => {
       try {
         const { token } = data.body.data;
-        const res = await request(server).get('/api/v1/trips').send({ token });
+        const res = await request(server).get('/api/v1/trips').send({ token, user_id: -1 });
         expect(res.status).toBe(403);
-        expect(res.body.error).toBe('Access denied. User not registered.');
+        expect(res.body.error).toBe('Access denied. Worng user id.');
       } catch (ex) {
         return ex;
       }
@@ -295,9 +295,9 @@ describe('/api/v1/tips/:tripId', () => {
     it('should return 403 if user_id is invalid', async () => {
       try {
         const { token } = data.body.data;
-        const res = await request(server).patch('/api/v1/trips/1').send({ token });
+        const res = await request(server).patch('/api/v1/trips/1').send({ token, user_id: -1 });
         expect(res.status).toBe(403);
-        expect(res.body.error).toBe('Access denied. User not registered.');
+        expect(res.body.error).toBe('Access denied. Worng user id.');
       } catch (ex) {
         return ex;
       }
