@@ -52,7 +52,7 @@ export default class TripController {
         },
       });
     } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
+      return internalServerErrorResponse(req, res);
     }
   }
 
@@ -74,7 +74,7 @@ export default class TripController {
         data: newTripData,
       });
     } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
+      return internalServerErrorResponse(req, res);
     }
   }
 
@@ -93,7 +93,7 @@ export default class TripController {
         },
       });
     } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
+      return internalServerErrorResponse(req, res);
     }
   }
 }

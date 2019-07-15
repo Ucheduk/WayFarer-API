@@ -58,7 +58,7 @@ export default class BookingController {
         },
       });
     } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
+      return internalServerErrorResponse(req, res);
     }
   }
 
@@ -93,7 +93,7 @@ export default class BookingController {
         data: newBookingData,
       });
     } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
+      return internalServerErrorResponse(req, res);
     }
   }
 
@@ -132,7 +132,7 @@ export default class BookingController {
         },
       });
     } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
+      return internalServerErrorResponse(req, res);
     }
   }
 }
