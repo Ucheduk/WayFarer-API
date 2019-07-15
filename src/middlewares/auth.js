@@ -9,7 +9,7 @@ const {
 
 dotenv.config();
 
-class TripMiddleware {
+class AuthMiddleware {
   // Check is User have valid token
   static async auth(req, res, next) {
     const { token } = req.body;
@@ -37,4 +37,4 @@ class TripMiddleware {
   }
 }
 
-module.exports = TripMiddleware;
+module.exports = AuthMiddleware;

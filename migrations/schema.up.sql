@@ -31,12 +31,11 @@ CREATE TABLE trip (
 );
 
 CREATE TABLE booking (
-  id serial,
+  id serial PRIMARY KEY,
   trip_id INTEGER,
   user_id INTEGER,
   created_on TIMESTAMP NOT NULL,
   seat_number INTEGER NOT NULL,
-  PRIMARY KEY (trip_id, user_id),
   CONSTRAINT booking_trip_id_fkey FOREIGN KEY (trip_id)
     REFERENCES trip (id) MATCH SIMPLE
     ON UPDATE NO ACTION ON DELETE NO ACTION,

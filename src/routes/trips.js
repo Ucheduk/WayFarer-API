@@ -1,16 +1,16 @@
 const TripController = require('../controllers/trips');
-const TripMiddleware = require('../middlewares/trips');
+const AuthMiddleware = require('../middlewares/auth');
 
 module.exports = (router) => {
   router.post(
     '/trips',
-    TripMiddleware.auth,
-    TripMiddleware.admin,
+    AuthMiddleware.auth,
+    AuthMiddleware.admin,
     TripController.createTrip,
   );
   router.get(
     '/trips',
-    TripMiddleware.auth,
+    AuthMiddleware.auth,
     TripController.getTrips,
   );
   return router;
