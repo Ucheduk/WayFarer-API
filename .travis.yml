@@ -17,6 +17,14 @@ env:
 services:
   - postgresql
 
+deploy:
+  provider: heroku
+  api_key:
+    secure: "Qog1vOINiRbO/+q8GgcDZqaQJc0/s8VNX4lyW0PCM6Tpb19lKJqsjSA+r5oTVZLbpmBYo/+1uUb7eVHcDD302Q6nDUq/HN0YQiO5GIyqCMJWjlXMr1MyzRjOMm33qHZqZxITn+L4WWxORHMdiNVtsciOGtlgCEKDB23TTCXIA5/eyixf7ts4qeIUPGSMyoWOq2tZQQUHEM3JpNjUxJFxAk0JBclDX9M9SnHaBX/X55+KrZWzqz1NHqRAvIrw9RefZ+//yLDYQKpRm5fRbfAGxeLabcZzGo1oDz9MVbdLRZ1BNeNnr5OmBnwdf91Pmmebu3c86tN9m5UdDnk+Zp9tejHuSC9QmQ4NMb4o4x7d7tcBvJezQ96oJ60ZPTl9z806Y4c1IrqyWRV4c7xLsWu1SUrrNPslykvypEVjkVLvBuiNQ7WggaVrOejTirn81ldwH4Y5aqxgCinEvetYmBWLYTcfCkykOqetE5lPSL15i2ver1Xxd7HzC4MZYQY9D8xE3/ZLvRGTmfn/3PBraSr5eEDi8sgSt/IpZljfb7FNVJ+vUIj05rpMrkaNiZUnknoBel7zpv23yJhMc1UW9dfZIdXuf9eMEJmodKGpTWvGcINzNSiQJ4m2a1wZe1Hf5ZY7pUX/zTKgEa5KTZvTwfrLkIK90ml1kHvCSKsavoTcuXQ="
+  app: wayfarerapi-andela
+  on:
+    repo: Ucheduk/WayFarer-API
+
 before_script:
   - psql -c 'create database wayfarer_test_db;' -U postgres
   - psql -c "ALTER USER postgres PASSWORD 'password'";
