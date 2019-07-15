@@ -1,12 +1,12 @@
-const verifyJwtToken = require('../helpers/verifyJwtToken');
-const {
+import verifyJwtToken from '../helpers/verifyJwtToken';
+import {
   badRequestResponse,
   unauthorizedRequestResponse,
   forbiddenRequestResponse,
-} = require('../helpers/errorHandler');
+} from '../helpers/errorHandler';
 
 
-class AuthMiddleware {
+export default class AuthMiddleware {
   // Check is User have valid token
   static async auth(req, res, next) {
     const { token } = req.body;
@@ -32,5 +32,3 @@ class AuthMiddleware {
     return next();
   }
 }
-
-module.exports = AuthMiddleware;

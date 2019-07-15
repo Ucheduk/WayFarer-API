@@ -1,11 +1,11 @@
-const Model = require('../models/Model');
-const UserController = require('../controllers/users');
-const {
+import Model from '../models/Model';
+import UserController from './users';
+import {
   internalServerErrorResponse,
-} = require('../helpers/errorHandler');
+} from '../helpers/errorHandler';
 
 
-class BookingController {
+export default class BookingController {
   static model() {
     return new Model('booking');
   }
@@ -58,5 +58,3 @@ class BookingController {
     }
   }
 }
-
-module.exports = BookingController;

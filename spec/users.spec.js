@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
-const httpMocks = require('node-mocks-http');
-const UserController = require('../src/controllers/users');
-const UserMiddleware = require('../src/middlewares/users');
+import httpMocks from 'node-mocks-http';
+import UserController from '../src/controllers/users';
+import UserMiddleware from '../src/middlewares/users';
 
 // SignUp
 describe('Can user signup Route - POST /api/v1/auth/signup', () => {

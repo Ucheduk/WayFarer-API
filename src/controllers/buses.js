@@ -1,9 +1,7 @@
-const Model = require('../models/Model');
+import Model from '../models/Model';
 
-class BusController {
+export default class BusController {
   static model() {
     return new Model('bus');
   }
 }
-
-module.exports = BusController;

@@ -2,12 +2,12 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
-const request = require('supertest');
-const server = require('../src/index');
-const Model = require('../src/models/Model');
+import request from 'supertest';
+import server from '../src/index';
+import Model from '../src/models/Model';
 
-const bookingModel = new Model('booking');
-const tripModel = new Model('trip');
+const BookingModel = new Model('booking');
+const TripModel = new Model('trip');
 
 describe('/api/v1/bookings', () => {
   let data;
@@ -38,8 +38,8 @@ describe('/api/v1/bookings', () => {
     afterEach(async () => {
       try {
         server.close();
-        await bookingModel.deleteAll();
-        await tripModel.deleteAll();
+        await BookingModel.deleteAll();
+        await TripModel.deleteAll();
       } catch (ex) {
         return ex;
       }

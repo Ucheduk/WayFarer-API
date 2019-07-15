@@ -1,11 +1,10 @@
-const Model = require('../models/Model');
-
-const {
+import Model from '../models/Model';
+import {
   internalServerErrorResponse,
   nullResponse,
-} = require('../helpers/errorHandler');
+} from '../helpers/errorHandler';
 
-class TripController {
+export default class TripController {
   static model() {
     return new Model('trip');
   }
@@ -53,7 +52,7 @@ class TripController {
   static async getTrips(req, res) {
     try {
       const data = await TripController.model().select('*');
-      if (!data.length) nullResponse(req, res);
+      if (!data.length) return nullResponse(req, res, 'No Trip found.');
 
       // Change id key to trip_id
       const changeIDKey = (d) => {
@@ -65,7 +64,7 @@ class TripController {
       };
       const newData = data.map(changeIDKey);
 
-      return res.status(200).json({
+      return res.json({
         status: 'success',
         data: newData,
       });
@@ -88,5 +87,3 @@ class TripController {
     }
   }
 }
-
-module.exports = TripController;

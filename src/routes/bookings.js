@@ -1,8 +1,8 @@
-const BookingController = require('../controllers/bookings');
-const BookingMiddleware = require('../middlewares/bookings');
-const AuthMiddleware = require('../middlewares/auth');
+import BookingController from '../controllers/bookings';
+import BookingMiddleware from '../middlewares/bookings';
+import AuthMiddleware from '../middlewares/auth';
 
-module.exports = (router) => {
+export default (router) => {
   router.post(
     '/bookings',
     AuthMiddleware.auth,

@@ -1,239 +1,95 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
-const httpMocks = require('node-mocks-http');
-const TripController = require('../src/controllers/trips');
-const AuthMiddleware = require('../src/middlewares/auth');
-const UserController = require('../src/controllers/users');
+import request from 'supertest';
+import server from '../src/index';
+import Model from '../src/models/Model';
+// import httpMocks from 'node-mocks-http';
+// import TripController from '../src/controllers/trips';
+// import AuthMiddleware from '../src/middlewares/auth';
+// import UserController from '../src/controllers/users';
+
+const TripModel = new Model('trip');
 
 // POST - Trips Route
-describe('Can user create trips Route - POST /api/v1/trips', () => {
+describe('/api/v1/tips', () => {
   let data;
-
-  describe('If user has valid token and admin role', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'admin@test.com',
-        password: 'bananas123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
-      try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
-      } catch (ex) {
-        return ex;
-      }
-    });
-    it('should return success response', async () => {
-      try {
-        const req = httpMocks.createRequest({
-          method: 'POST',
-          url: '/api/v1/trips',
-          body: {
-            token: data.data.token,
-            user_id: data.data.user_id,
-            is_admin: data.data.isadmin,
-            bus_id: 1,
-            origin: 'Abuja',
-            destination: 'Lagos',
-            trip_date: '2019-09-12',
-            fare: 20000,
-          },
-        });
-        const res = httpMocks.createResponse();
-        await TripController.createTrip(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(201);
-        expect(Object.keys(result)).toEqual(['status', 'data']);
-        expect(result.data.trip_id && result.data.bus_id).toMatch(/\d{1,}/);
-        expect(Object.keys(result.data).length).toBe(7);
-      } catch (ex) {
-        return ex;
-      }
-    });
+  beforeEach(async () => {
+    try {
+      data = await request(server).post('/api/v1/auth/signin').send({ email: 'admin@test.com', password: 'bananas123' });
+      return server;
+    } catch (ex) {
+      return ex;
+    }
+  });
+  afterEach(async () => {
+    try {
+      server.close();
+      await TripModel.deleteAll();
+    } catch (ex) {
+      return ex;
+    }
   });
 
-  describe('If user_id is invalid', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'admin@test.com',
-        password: 'bananas123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
+  describe('POST /', () => {
+    it('should return 401 if users is not logged in', async () => {
       try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
+        const res = await request(server).post('/api/v1/trips');
+        expect(res.status).toBe(401);
+        expect(res.body.status).toBe('error');
+        expect(res.body.error).toBe('Access denied. No token provided.');
       } catch (ex) {
         return ex;
       }
     });
-    it('should return forbidden error response', async () => {
+    it('should return 400 if token is invalid', async () => {
       try {
-        const req = httpMocks.createRequest({
-          method: 'POST',
-          url: '/api/v1/trips',
-          body: {
-            token: data.data.token,
-            user_id: 0,
-            is_admin: data.data.isadmin,
-            bus_id: 1,
-            origin: 'Abuja',
-            destination: 'Lagos',
-            trip_date: '2019-09-12',
-            fare: 20000,
-          },
+        const res = await request(server).post('/api/v1/trips').send({ token: 'invalid-token' });
+        expect(res.status).toBe(400);
+        expect(res.body.status).toBe('error');
+        expect(res.body.error).toBe('Invalid token.');
+      } catch (ex) {
+        return ex;
+      }
+    });
+    it('should return 403 if user_id is invalid', async () => {
+      try {
+        const { token } = data.body.data;
+        const res = await request(server).post('/api/v1/trips').send({ token });
+        expect(res.status).toBe(403);
+        expect(res.body.error).toBe('Access denied. User not registered.');
+      } catch (ex) {
+        return ex;
+      }
+    });
+    it('should return 400 if not Admin', async () => {
+      try {
+        const { user_id: userId, token } = data.body.data;
+        const res = await request(server).post('/api/v1/trips').send({ token, user_id: userId });
+        expect(res.status).toBe(403);
+        expect(res.body.error).toBe('Access denied. User must be an Admin.');
+        expect(res.body.status).toBe('error');
+      } catch (ex) {
+        return ex;
+      }
+    });
+    it('should return 201 if token, user_id and is_admin is valid', async () => {
+      try {
+        const { user_id: userId, is_admin: isAdmin, token } = data.body.data;
+        const res = await request(server).post('/api/v1/trips').send({
+          token,
+          user_id: userId,
+          is_admin: isAdmin,
+          bus_id: 1,
+          origin: 'Abuja',
+          destination: 'Lagos',
+          trip_date: '2019-09-12',
+          fare: 20000,
         });
-        const res = httpMocks.createResponse();
-        await AuthMiddleware.auth(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(403);
-        expect(result.error).toBe('Access denied. User not registered.');
-        expect(result.status).toBe('error');
-      } catch (ex) {
-        return ex;
-      }
-    });
-  });
-
-  describe('If token is not provided', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'admin@test.com',
-        password: 'bananas123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
-      try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
-      } catch (ex) {
-        return ex;
-      }
-    });
-    it('should return unauthorized error response', async () => {
-      try {
-        const req = httpMocks.createRequest({
-          method: 'POST',
-          url: '/api/v1/trips',
-          body: {
-            user_id: data.data.user_id,
-            is_admin: data.data.isadmin,
-            bus_id: 1,
-            origin: 'Abuja',
-            destination: 'Lagos',
-            trip_date: '2019-09-12',
-            fare: 20000,
-          },
-        });
-        const res = httpMocks.createResponse();
-        await AuthMiddleware.auth(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(401);
-        expect(result.error).toBe('Access denied. No token provided.');
-        expect(result.status).toBe('error');
-      } catch (ex) {
-        return ex;
-      }
-    });
-  });
-
-  describe('If token is invalid', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'admin@test.com',
-        password: 'bananas123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
-      try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
-      } catch (ex) {
-        return ex;
-      }
-    });
-    it('should return bad request error response', async () => {
-      try {
-        const req = httpMocks.createRequest({
-          method: 'POST',
-          url: '/api/v1/trips',
-          body: {
-            token: 'invalid.token',
-            user_id: data.data.user_id,
-            is_admin: data.data.isadmin,
-            bus_id: 1,
-            origin: 'Abuja',
-            destination: 'Lagos',
-            trip_date: '2019-09-12',
-            fare: 20000,
-          },
-        });
-        const res = httpMocks.createResponse();
-        await AuthMiddleware.auth(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(400);
-        expect(result.error).toBe('Invalid token.');
-        expect(result.status).toBe('error');
-      } catch (ex) {
-        return ex;
-      }
-    });
-  });
-
-  describe('If user do not have admin role', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'john@test.com',
-        password: 'avocados123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
-      try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
-      } catch (ex) {
-        return ex;
-      }
-    });
-    it('should return unauthorized error response', async () => {
-      try {
-        const req = httpMocks.createRequest({
-          method: 'POST',
-          url: '/api/v1/trips',
-          body: {
-            token: data.data.token,
-            user_id: data.data.user_id,
-            is_admin: data.data.isadmin,
-            bus_id: 1,
-            origin: 'Abuja',
-            destination: 'Lagos',
-            trip_date: '2019-09-12',
-            fare: 20000,
-          },
-        });
-        const res = httpMocks.createResponse();
-        await AuthMiddleware.admin(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(403);
-        expect(result.error).toBe('Access denied. User must be an Admin.');
-        expect(result.status).toBe('error');
+        expect(res.status).toBe(201);
+        expect(Object.keys(res.body)).toEqual(['status', 'data']);
+        expect(res.body.data.trip_id && res.body.data.bus_id).toMatch(/\d{1,}/);
+        expect(Object.keys(res.body.data).length).toBe(7);
       } catch (ex) {
         return ex;
       }
@@ -243,165 +99,104 @@ describe('Can user create trips Route - POST /api/v1/trips', () => {
 
 
 // GET - Trips Route
-describe('Can user get trips Route - GET /api/v1/trips', () => {
-  describe('If user has valid token', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'admin@test.com',
-        password: 'bananas123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
-      try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
-      } catch (ex) {
-        return ex;
-      }
-    });
-    it('should return success response', async () => {
-      try {
-        const req = httpMocks.createRequest({
-          method: 'GET',
-          url: '/api/v1/trips',
-          body: {
-            token: data.data.token,
-            user_id: data.data.user_id,
-            is_admin: data.data.isadmin,
-          },
-        });
-        const res = httpMocks.createResponse();
-        await TripController.getTrips(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(200);
-        expect(Object.keys(result)).toEqual(['status', 'data']);
-        expect(result.data[0].trip_id && result.data[0].bus_id).toMatch(/\d{1,}/);
-        expect(Object.keys(result.data[0]).length).toBe(7);
-      } catch (ex) {
-        return ex;
-      }
-    });
+describe('/api/v1/tips', () => {
+  let data;
+  beforeEach(async () => {
+    try {
+      data = await request(server).post('/api/v1/auth/signin').send({ email: 'admin@test.com', password: 'bananas123' });
+      return server;
+    } catch (ex) {
+      return ex;
+    }
   });
-  describe('If token is invalid', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'admin@test.com',
-        password: 'bananas123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
+  afterEach(() => server.close());
+
+  describe('GET /', () => {
+    it('should return 401 if users is not logged in', async () => {
       try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
+        const res = await request(server).get('/api/v1/trips');
+        expect(res.status).toBe(401);
+        expect(res.body.status).toBe('error');
+        expect(res.body.error).toBe('Access denied. No token provided.');
       } catch (ex) {
         return ex;
       }
     });
-    it('should return bad request error response', async () => {
+    it('should return 400 if token is invalid', async () => {
       try {
-        const req = httpMocks.createRequest({
-          method: 'GET',
-          url: '/api/v1/trips',
-          body: {
-            token: 'faketoken',
-            user_id: data.data.user_id,
-            is_admin: data.data.isadmin,
-          },
+        const res = await request(server).get('/api/v1/trips').send({ token: 'invalid-token' });
+        expect(res.status).toBe(400);
+        expect(res.body.status).toBe('error');
+        expect(res.body.error).toBe('Invalid token.');
+      } catch (ex) {
+        return ex;
+      }
+    });
+    it('should return 403 if user_id is invalid', async () => {
+      try {
+        const { token } = data.body.data;
+        const res = await request(server).get('/api/v1/trips').send({ token });
+        expect(res.status).toBe(403);
+        expect(res.body.error).toBe('Access denied. User not registered.');
+      } catch (ex) {
+        return ex;
+      }
+    });
+    it('should return 404 if token, user_id is valid but no trip found', async () => {
+      try {
+        const { user_id: userId, token } = data.body.data;
+        const res = await request(server).get('/api/v1/trips').send({
+          token,
+          user_id: userId,
         });
-        const res = httpMocks.createResponse();
-        await AuthMiddleware.auth(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(400);
-        expect(result.error).toBe('Invalid token.');
-        expect(result.status).toBe('error');
+        expect(res.status).toBe(404);
+        expect(Object.keys(res.body)).toEqual(['status', 'error']);
+        expect(res.body.error).toBe('No Trip found.');
       } catch (ex) {
         return ex;
       }
     });
-  });
-  describe('If user_id is invalid', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'admin@test.com',
-        password: 'bananas123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
-      try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
-      } catch (ex) {
-        return ex;
-      }
-    });
-    it('should return forbidden error response', async () => {
-      try {
-        const req = httpMocks.createRequest({
-          method: 'POST',
-          url: '/api/v1/trips',
-          body: {
-            token: data.data.token,
-            user_id: 0,
-            is_admin: data.data.isadmin,
-          },
-        });
-        const res = httpMocks.createResponse();
-        await AuthMiddleware.auth(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(403);
-        expect(result.error).toBe('Access denied. User not registered.');
-        expect(result.status).toBe('error');
-      } catch (ex) {
-        return ex;
-      }
-    });
-  });
-  describe('If token is not provided', () => {
-    const request = httpMocks.createRequest({
-      method: 'POST',
-      url: '/api/v1/auth/signin',
-      body: {
-        email: 'admin@test.com',
-        password: 'bananas123',
-      },
-    });
-    const response = httpMocks.createResponse();
-    beforeEach(async () => {
-      try {
-        await UserController.signInUser(request, response);
-        data = response._getJSONData();
-      } catch (ex) {
-        return ex;
-      }
-    });
-    it('should return unauthorized error response', async () => {
-      try {
-        const req = httpMocks.createRequest({
-          method: 'GET',
-          url: '/api/v1/trips',
-          body: {
-            user_id: data.data.user_id,
-            is_admin: data.data.isadmin,
-          },
-        });
-        const res = httpMocks.createResponse();
-        await AuthMiddleware.auth(req, res);
-        const result = res._getJSONData();
-        expect(res.statusCode).toBe(401);
-        expect(result.error).toBe('Access denied. No token provided.');
-        expect(result.status).toBe('error');
-      } catch (ex) {
-        return ex;
-      }
+    describe('With trip found', () => {
+      beforeEach(async () => {
+        try {
+          const { user_id: userId, is_admin: isAdmin, token } = data.body.data;
+          await request(server).post('/api/v1/trips').send({
+            token,
+            user_id: userId,
+            is_admin: isAdmin,
+            bus_id: 1,
+            origin: 'Abuja',
+            destination: 'Lagos',
+            trip_date: '2019-09-12',
+            fare: 20000,
+          });
+          return server;
+        } catch (ex) {
+          return ex;
+        }
+      });
+      afterEach(async () => {
+        try {
+          server.close();
+          await TripModel.deleteAll();
+        } catch (ex) {
+          return ex;
+        }
+      });
+      it('should return 200 if token, user_id is valid', async () => {
+        try {
+          const { user_id: userId, token } = data.body.data;
+          const res = await request(server).get('/api/v1/trips').send({
+            token,
+            user_id: userId,
+          });
+          expect(res.status).toBe(200);
+          expect(Object.keys(res.body)).toEqual(['status', 'data']);
+          // expect(res.body.error).toBe('No Trip found.');
+        } catch (ex) {
+          return ex;
+        }
+      });
     });
   });
 });
