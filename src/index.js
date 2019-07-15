@@ -4,7 +4,7 @@ import debug from 'debug';
 import usersRouter from './routes/users';
 import tripRouter from './routes/trips';
 import bookingRouter from './routes/bookings';
-import * as swaggerDoc from './swagger.json';
+import * as swaggerDoc from '../swagger.json';
 
 const app = express();
 app.use(express.json());
