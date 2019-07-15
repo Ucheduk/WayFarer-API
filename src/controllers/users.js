@@ -5,7 +5,7 @@ import {
   internalServerErrorResponse,
   badRequestResponse,
   checkAdminRoute,
-} from '../helpers/errorHandler';
+} from '../helpers/errorHandlers';
 
 
 export default class UserController {
@@ -70,20 +70,6 @@ export default class UserController {
           is_admin: isAdmin,
           token,
         },
-      });
-    } catch (e) {
-      return internalServerErrorResponse(req, res, e.message);
-    }
-  }
-
-  static async deleteUser(req, res) {
-    try {
-      const { email } = req.body;
-      await UserController.model()
-        .delete('email', email);
-      return res.status(202).json({
-        status: 'success',
-        message: 'User was deleted successfully',
       });
     } catch (e) {
       return internalServerErrorResponse(req, res, e.message);

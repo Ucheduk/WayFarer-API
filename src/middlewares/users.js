@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { badRequestResponse } from '../helpers/errorHandler';
+import { badRequestResponse } from '../helpers/errorHandlers';
 
 export default class UserMiddleware {
   static validateSignUpUser(req, res, next) {

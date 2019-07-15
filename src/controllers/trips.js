@@ -2,7 +2,10 @@ import Model from '../models/Model';
 import {
   internalServerErrorResponse,
   nullResponse,
-} from '../helpers/errorHandler';
+  badRequestResponse,
+} from '../helpers/errorHandlers';
+import changeIDKey from '../helpers/changeKeyID';
+import getTripsByDestination from '../helpers/getByQuery';
 
 export default class TripController {
   static model() {
@@ -51,36 +54,38 @@ export default class TripController {
   // Get all trips
   static async getTrips(req, res) {
     try {
-      const data = await TripController.model().select('*');
-      if (!data.length) return nullResponse(req, res, 'No Trip found.');
+      let tripData;
+      const { destination, origin } = req.query;
+      if (origin) tripData = await getTripsByDestination('origin', origin, TripController);
+      if (destination) tripData = await getTripsByDestination('destination', destination, TripController);
+      if (!origin && !destination) tripData = await TripController.model().select('*');
+      if (!tripData.length) return nullResponse(req, res, 'No Trip found.');
 
-      // Change id key to trip_id
-      const changeIDKey = (d) => {
-        const { id, ...rest } = d;
-        return {
-          trip_id: id,
-          ...rest,
-        };
-      };
-      const newData = data.map(changeIDKey);
+      // Change trip id key to trip_id
+      const newTripData = changeIDKey('trip_id', tripData);
 
       return res.json({
         status: 'success',
-        data: newData,
+        data: newTripData,
       });
     } catch (e) {
       return internalServerErrorResponse(req, res, e.message);
     }
   }
 
-  static async deleteTrip(req, res) {
+  static async updateTrip(req, res) {
     try {
-      const { trip_id: tripId } = req.body;
-      await TripController.model()
-        .delete('id', tripId);
+      const { tripId } = req.params;
+      if (!Number.isInteger(parseInt(tripId, 10))) return badRequestResponse(req, res, 'Invalid trip Id. Must be an Integer.');
+      const tripData = await TripController.model()
+        .update('status', "'cancelled'", `WHERE id=${tripId}`, '*');
+      if (!tripData.length) return badRequestResponse(req, res, 'No trip found to cancelled.');
+
       return res.status(202).json({
         status: 'success',
-        success: 'Trip was deleted successfully',
+        data: {
+          message: 'Trip cancelled successfully',
+        },
       });
     } catch (e) {
       return internalServerErrorResponse(req, res, e.message);

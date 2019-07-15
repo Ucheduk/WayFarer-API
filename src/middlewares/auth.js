@@ -3,7 +3,7 @@ import {
   badRequestResponse,
   unauthorizedRequestResponse,
   forbiddenRequestResponse,
-} from '../helpers/errorHandler';
+} from '../helpers/errorHandlers';
 
 
 export default class AuthMiddleware {
@@ -14,9 +14,10 @@ export default class AuthMiddleware {
 
     try {
       const payload = verifyJwtToken(token);
-      const { user_id: id } = payload;
+      const { user_id: userIdPayload, is_admin: isAdminPayload } = payload;
       const { user_id: userId } = req.body;
-      if (id !== userId) return forbiddenRequestResponse(req, res, 'Access denied. User not registered.');
+      if (userIdPayload !== userId) return forbiddenRequestResponse(req, res, 'Access denied. User not registered.');
+      req.user = { userIdPayload, isAdminPayload };
       return next();
     } catch (ex) {
       return badRequestResponse(req, res, 'Invalid token.');

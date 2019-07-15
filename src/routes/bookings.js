@@ -9,5 +9,21 @@ export default (router) => {
     BookingMiddleware.validateBooking,
     BookingController.createBooking,
   );
+  router.get(
+    '/bookings',
+    AuthMiddleware.auth,
+    BookingController.getBookings,
+  );
+  router.patch(
+    '/bookings/:bookingId',
+    AuthMiddleware.auth,
+    BookingMiddleware.validateSeatNumber,
+    BookingController.updateBooking,
+  );
+  router.delete(
+    '/bookings/:bookingId',
+    AuthMiddleware.auth,
+    BookingController.deleteBooking,
+  );
   return router;
 };
