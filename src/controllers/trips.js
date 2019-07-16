@@ -39,15 +39,11 @@ export default class TripController {
           'id, bus_id, origin, destination, trip_date, fare, status',
         );
 
-      const {
-        id,
-        ...resData
-      } = data[0];
+      const { ...resData } = data[0];
 
       return res.status(201).json({
         status: 'success',
         data: {
-          trip_id: id,
           ...resData,
         },
       });

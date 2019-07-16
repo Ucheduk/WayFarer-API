@@ -59,32 +59,26 @@
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "formData",
-            "description": "Valid email address",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "formData",
-            "description": "Valid password",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "first_name",
-            "in": "formData",
-            "description": "John",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "last_name",
-            "in": "formData",
-            "description": "Doe",
-            "required": true,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Sign up details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -133,7 +127,7 @@
         ],
         "summary": "Create admin user account",
         "description": "",
-        "operationId": "signup",
+        "operationId": "admin-signup",
         "consumes": [
           "application/json"
         ],
@@ -143,32 +137,26 @@
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "formData",
-            "description": "Valid email address",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "formData",
-            "description": "Valid password",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "first_name",
-            "in": "formData",
-            "description": "John",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "last_name",
-            "in": "formData",
-            "description": "Doe",
-            "required": true,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Sign up details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "first_name": {
+                  "type": "string"
+                },
+                "last_name": {
+                  "type": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -227,18 +215,20 @@
         ],
         "parameters": [
           {
-            "name": "email",
-            "in": "formData",
-            "description": "Valid email address",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "formData",
-            "description": "Valid password",
-            "required": true,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Sign up details",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {

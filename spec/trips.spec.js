@@ -84,7 +84,7 @@ describe('/api/v1/tips', () => {
         });
         expect(res.status).toBe(201);
         expect(Object.keys(res.body)).toEqual(['status', 'data']);
-        expect(res.body.data.trip_id && res.body.data.bus_id).toMatch(/\d{1,}/);
+        expect(res.body.data.id && res.body.data.bus_id).toMatch(/\d{1,}/);
         expect(Object.keys(res.body.data).length).toBe(7);
       } catch (ex) {
         return ex;
@@ -343,7 +343,7 @@ describe('/api/v1/tips/:tripId', () => {
             trip_date: '2019-09-12',
             fare: 20000,
           });
-          const { trip_id: id } = tripData.body.data;
+          const { id } = tripData.body.data;
           tripId = id;
           return server;
         } catch (ex) {
