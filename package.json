@@ -15,7 +15,7 @@
     "dev": "DEBUG=dev NODE_ENV=development nodemon --exec babel-node ./src/index.js",
     "clean": "rimraf dist",
     "build": "babel ./src --out-dir dist",
-    "prod": "NODE_ENV=production npm run server:prod",
+    "prod": "NODE_ENV=production npm run server:prod", 
     "postinstall": "npm run build"
   },
   "engines": {
