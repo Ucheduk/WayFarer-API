@@ -28,7 +28,7 @@ describe('/api/v1/bookings', () => {
         trip_date: '2019-09-12',
         fare: 50000,
       }).set('token', token);
-      const { trip_id: tripNo } = data2.body.data;
+      const { id: tripNo } = data2.body.data;
       // console.log(data2.header);
       tripId = tripNo;
       return server;
@@ -173,7 +173,7 @@ describe('/api/v1/bookings', () => {
             trip_date: '2019-09-12',
             fare: 20000,
           });
-          const { trip_id: tripId } = tripData.body.data;
+          const { id: tripId } = tripData.body.data;
           await request(server).post('/api/v1/bookings').send({ token, user_id: userId, trip_id: tripId });
           return server;
         } catch (ex) {
@@ -279,9 +279,9 @@ describe('/api/v1/bookings/:bookingsId', () => {
             trip_date: '2019-09-12',
             fare: 20000,
           });
-          const { trip_id: tripId } = tripData.body.data;
+          const { id: tripId } = tripData.body.data;
           const bookingData = await request(server).post('/api/v1/bookings').send({ token, user_id: userId, trip_id: tripId });
-          const { booking_id: id } = bookingData.body.data;
+          const { id } = bookingData.body.data;
           bookingId = id;
           return server;
         } catch (ex) {

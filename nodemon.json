@@ -1,1 +1,0 @@
-{  "exec": "DEBUG=dev npm run dev",  "watch": ["src/*", "public/*"],  "ext": "js, html, css, json" }

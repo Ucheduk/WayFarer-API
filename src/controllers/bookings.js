@@ -45,7 +45,7 @@ export default class BookingController {
       return res.status(201).json({
         status: 'success',
         data: {
-          booking_id: id,
+          id,
           user_id: userIdPayload,
           trip_id: tripId,
           bus_id: busId,
